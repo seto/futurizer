@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "futurizer"
-version = "0.0.1"
-description = "A linguistic engine for mechanical transmutation"
+version = "0.0.2"
+description = "Experimental machinery for mechanical transmutation."
 readme = "README.md"
 authors = [{ name="Roberto Matarazzo" }]
-license = { text="AGPL-3.0-only" }
+license = { text="AGPL-3.0-or-later" }
 requires-python = ">=3.12"
 classifiers = [
     "Programming Language :: Python :: 3.12",
