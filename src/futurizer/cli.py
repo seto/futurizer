@@ -22,7 +22,12 @@ import sys
 
 def main():
     print("STATUS: 501 Not Implemented.")
-    print("REASON: November has not arrived yet.")
+    print("REASON: You aren't a time traveler.")
+    print(
+        "\nIf you are, you could do more useful things.\n"
+        "Like preventing one of those many nonsense wars,\n"
+        "or simply winning the lottery."
+    )
 
     sys.exit(0)
 

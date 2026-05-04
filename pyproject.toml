@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "futurizer"
-version = "0.0.2"
+version = "0.0.3"
 description = "Experimental machinery for mechanical transmutation."
 readme = "README.md"
 authors = [{ name="Roberto Matarazzo" }]

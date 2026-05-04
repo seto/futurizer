@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # Copyright (C) 2026  Roberto Matarazzo
 #
 # This file is part of Futurizer.
@@ -17,14 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Futurizer.  If not, see <https://www.gnu.org/licenses/>.
 
-
-def futurize():
-    raise NotImplementedError(
-        "This program is not yet implemented."
-        " Unless you are a time traveler,"
-        " you should not be able to run this code."
-    )
-
+from .cli import main
 
 if __name__ == "__main__":
-    futurize()
+    main()
