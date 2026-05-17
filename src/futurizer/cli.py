@@ -22,11 +22,10 @@ import sys
 
 def main():
     print("STATUS: 501 Not Implemented.")
-    print("REASON: You aren't a time traveler.")
+    print("REASON: Busy paying bills.")
     print(
-        "\nIf you are, you could do more useful things.\n"
-        "Like preventing one of those many nonsense wars,\n"
-        "or simply winning the lottery."
+        "\nNothing new. Just wanted to (un)wear the mask.\n"
+        "All this work without play are making me a dull boy."
     )
 
     sys.exit(0)
