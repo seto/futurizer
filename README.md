@@ -1,8 +1,5 @@
-> [!NOTE]
-> This program is under development.  
-> See you in November!
-
 # Futurizer
+This program is under development. Any information provided here may be inaccurate or incomplete.
 
-### LICENSE
+## License
 Licensed under the **GNU Affero General Public License v3 (AGPL-3.0)**.
