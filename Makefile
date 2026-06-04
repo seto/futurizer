@@ -17,4 +17,6 @@ publish: build
 	@python3 -m twine upload dist/*
 
 clean:
+	@rm -rf dist/ build/
+	@find . -name "*.egg-info" -type d -exec rm -r {} +
 	@find . -name "__pycache__" -type d -exec rm -r {} +
