@@ -22,10 +22,10 @@ import sys
 
 def main():
     print("STATUS: 501 Not Implemented.")
-    print("REASON: Busy paying bills.")
+    print("REASON: The Corpo is draining my soul.")
     print(
-        "\nNothing new. Just wanted to (un)wear the mask.\n"
-        "All this work without play are making me a dull boy."
+        "\033[1;3;35m« That is not dead which in ignition lies,"
+        "\nAnd with strange code even the Corpo dies. »\033[0m"
     )
 
     sys.exit(0)
