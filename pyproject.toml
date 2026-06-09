@@ -36,7 +36,9 @@ pythonpath = ["src"]
 [tool.black]
 line-length = 88
 target-version = ["py312", "py313", "py314"]
+extend-exclude = "/lang/"
 
 [tool.isort]
 profile = "black"
 line_length = 88
+extend_skip = ["src/futurizer/lang/"]
