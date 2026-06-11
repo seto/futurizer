@@ -130,7 +130,7 @@ MECHANICAL_WORDS = [
 
 # Onomatopoeic sequences for training the Markov chain,
 # extracted and inspired by Italian futurist poets
-ONOMATOPEE_CORPUS = [
+ONOMATOPOEIA_CORPUS = [
     "ZANG TUMB TUMB TUMB TARARÀ",
     "TUMB TUUUM TUMB TUUUM TUMB",
     "ZANG ZANG ZANG TUMB TUMB",
@@ -181,6 +181,6 @@ LANG_DATA = {
         "verb_to_infinitive": VERB_TO_INFINITIVE,
     },
     "mechanical_words": MECHANICAL_WORDS,
-    "onomatopee_corpus": ONOMATOPEE_CORPUS,
+    "onomatopeia_corpus": ONOMATOPOEIA_CORPUS,
     "noise_sequences": NOISE_SEQUENCES,
 }
