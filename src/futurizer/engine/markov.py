@@ -17,7 +17,7 @@
 
 """Markov chain bigram generator for onomatopoeic sequences.
 
-Defines `OnomatopoeiaChain`, a class that can be trained on a corpus of onomatopoeic
+Defines `MarkovChain`, a class that can be trained on a corpus of onomatopoeic
 sequences and then generate new ones by walking the resulting Markov chain.
 
 Corpus are defined in `src/futurizer/lang/*.py` in the `onomatopoeia_corpus` variable.
@@ -26,7 +26,7 @@ Corpus are defined in `src/futurizer/lang/*.py` in the `onomatopoeia_corpus` var
 import random
 
 
-class OnomatopoeiaChain:
+class MarkovChain:
     """Chain generator for onomatopoeic sequences.
 
     Each token in the corpus is mapped to the list of tokens
