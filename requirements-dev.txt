@@ -22,6 +22,8 @@ idna==3.18
     # via requests
 iniconfig==2.3.0
     # via pytest
+invoke==3.0.3
+    # via -r requirements-dev.in
 isort==8.0.1
     # via -r requirements-dev.in
 jaraco-classes==3.4.0
