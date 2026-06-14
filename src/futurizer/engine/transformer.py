@@ -1,0 +1,116 @@
+# Copyright (C) 2026  Roberto Matarazzo
+#
+# This file is part of Futurizer.
+#
+# Futurizer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Futurizer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Futurizer.  If not, see <https://www.gnu.org/licenses/>.
+
+"""Token-level futurist transformations.
+
+Defines `FuturistTransformer`, which maps each POS-tagged token to its
+futurist equivalent using randomized stylistic rules.
+"""
+
+import random
+
+from .markov import MarkovChain
+
+
+class FuturistTransformer:
+    """Apply futurist transformations to POS-tagged tokens.
+
+    Verbs are elongated, repeated, or fused with onomatopoeia.
+    Nouns are uppercased and fused with mechanical vocabulary.
+    Adjectives are randomly dropped or kept in uppercase.
+    Function words (articles, prepositions, conjunctions, pronouns) are deleted.
+    """
+
+    # Thresholds to style randomly each POS category
+    # NOTE: Evaluate to move to language specific corpus
+    _VERB_ELONGATE_THRESHOLD = 0.35
+    _VERB_REPEAT_THRESHOLD = 0.65
+    _NOUN_PREFIX_THRESHOLD = 0.40
+    _NOUN_PLAIN_THRESHOLD = 0.70
+    _ADJ_DROP_CHANCE = 0.50
+
+    def __init__(self, lang_data: dict):
+        self.rules = lang_data["rules"]
+        self.mechanical_words = lang_data["mechanical_words"]
+        self.markov = MarkovChain(lang_data["onomatopeia_corpus"])
+
+    def _to_infinitive(self, word: str) -> str:
+        """Return the approximate infinitive form of a verb in uppercase.
+
+        Applies the language's verb_to_infinitive suffix rules in order.
+        Falls back to the uppercased original if no rule matches.
+        """
+
+        w = word.lower()
+        for pattern, replacement in self.rules.get("verb_to_infinitive", []):
+            if w.endswith(pattern) and len(w) > len(pattern) + 2:
+                stem = w[: -len(pattern)]
+                return (stem + replacement).upper()
+
+        return word.upper()
+
+    def _futurize_verb(self, word: str) -> str:
+        inf = self._to_infinitive(word)
+        roll = random.random()
+
+        if roll < self._VERB_ELONGATE_THRESHOLD:
+            # Elongated echo: URLARE → URLAREEEEE
+            if inf and inf[-1] in "aeiouAEIOU":
+                return inf + inf[-1] * random.randint(2, 4)
+            return inf + "RRRR"
+
+        if roll < self._VERB_REPEAT_THRESHOLD:
+            # Repetition: SALIRE → SALIRE + SALIRE + SALIRE
+            n = random.randint(2, 3)
+            return " + ".join([inf] * n)
+
+        ono = self.markov.generate(random.randint(2, 3))
+        return f"{inf}-{ono}"
+
+    def _futurize_noun(self, word: str) -> str:
+        w = word.upper()
+        mech = random.choice(self.mechanical_words)
+        roll = random.random()
+
+        if roll < self._NOUN_PREFIX_THRESHOLD:
+            return f"{w}-{mech}"
+        if roll < self._NOUN_PLAIN_THRESHOLD:
+            # Uppercase only as the compositor will add separator
+            return w
+
+        return f"{mech}-{w}"
+
+    def _futurize_adj(self, word: str) -> str | None:
+        if random.random() < self._ADJ_DROP_CHANCE:
+            return None
+
+        return word.upper()
+
+    def transform(self, word: str, pos: str) -> str | None:
+        if pos == "VERB":
+            return self._futurize_verb(word)
+        if pos == "NOUN":
+            return self._futurize_noun(word)
+        if pos == "ADJ":
+            return self._futurize_adj(word)
+        if pos in ("ART", "PREP", "CONJ", "PRON"):
+            # Function words are deleted per futurist manifesto
+            return None
+        if pos == "ADV":
+            return word.upper() + "!"
+
+        return word.upper()
