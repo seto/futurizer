@@ -87,8 +87,11 @@ def main(argv=None):
         return 1
 
     try:
-        with open(args.input, encoding="utf-8") as f:
-            text = f.read()
+        if args.input == "-":
+            text = sys.stdin.read()
+        else:
+            with open(args.input, encoding="utf-8") as f:
+                text = f.read()
 
     except FileNotFoundError:
         print(f"Error: file {args.input} not found.", file=sys.stderr)
