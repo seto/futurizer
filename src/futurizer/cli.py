@@ -22,10 +22,10 @@
 This module can be executed from the command line using the following command
 from the `src` directory:
 
-    python -m futurizer input.txt -l it --noise 0.25
+    python -m futurizer input.txt
 
 CLI arguments:
-- `input`: The .txt file to transform.
+- `input`: The .txt file to transform, or '-' to read from stdin.
 - `-l` or `--lang`: The language code of the text (defaults to "it").
 - `--noise`: Corruption noise level (defaults to 0.15).
 - `--seed`: Random seed for reproducibility.
@@ -49,7 +49,7 @@ def main(argv=None):
     )
     ap.add_argument(
         "input",
-        help="path to the file to transform, supported formats: .txt",
+        help="path to the .txt file to transform, or '-' to read from stdin",
     )
     ap.add_argument(
         "-l",
@@ -95,11 +95,11 @@ def main(argv=None):
         return 1
 
     except UnicodeDecodeError:
-        print("Error: file not readable as UTF-8.", file=sys.stderr)
+        print("Error: input not readable as UTF-8.", file=sys.stderr)
         return 1
 
     if not text.strip():
-        print("Error: file is empty.", file=sys.stderr)
+        print("Error: input is empty.", file=sys.stderr)
         return 1
 
     print(futurize(text, lang_data=LANG_DATA, noise=args.noise))

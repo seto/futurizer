@@ -46,7 +46,7 @@ class FuturistTransformer:
     def __init__(self, lang_data: dict):
         self.rules = lang_data["rules"]
         self.mechanical_words = lang_data["mechanical_words"]
-        self.markov = MarkovChain(lang_data["onomatopeia_corpus"])
+        self.markov = MarkovChain(lang_data["onomatopoeia_corpus"])
 
     def _to_infinitive(self, word: str) -> str:
         """Return the approximate infinitive form of a verb in uppercase.

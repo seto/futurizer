@@ -43,14 +43,14 @@ def futurize(text: str, lang_data: dict, noise: float) -> str:
     transformer = FuturistTransformer(lang_data)
     markov = transformer.markov
 
-    verses_raw = _parse(text)
+    parsed_verses = _parse(text)
     output_verses = []
-    for verse_tokens in verses_raw:
-        if not verse_tokens:
+    for tokens in parsed_verses:
+        if not tokens:
             output_verses.append("")
             continue
 
-        words = [(tok, typ) for tok, typ in verse_tokens if typ == "word"]
+        words = [(tok, typ) for tok, typ in tokens if typ == "word"]
         if not words:
             output_verses.append("")
             continue
@@ -134,7 +134,8 @@ def _tag(word: str, lang_rules: dict) -> str:
         if w.endswith(sfx) and len(w) > len(sfx) + 1:
             return "NOUN"
 
-    # Archaic verb infinitives
+    # Verb infinitives truncated by apocope (poetic/archaic register):
+    # "cantar" → "cantare", "veder" → "vedere", "partir" → "partire"
     if w.endswith(("ar", "er", "ir")) and len(w) > 4:
         return "VERB"
 
@@ -184,12 +185,12 @@ def _corrupt(verse: str, markov: MarkovChain, lang_data: dict, noise: float) -> 
         return verse
 
     noise_seqs = lang_data.get("noise_sequences", [])
-    choice = random.random()
+    roll = random.random()
 
-    if choice < noise * _PREFIX_NOISE_RATIO and noise_seqs:
+    if roll < noise * _PREFIX_NOISE_RATIO and noise_seqs:
         return f"{random.choice(noise_seqs)} > {verse}"
 
-    if choice < noise:
+    elif roll < noise:
         return f"{verse} > {markov.generate(random.randint(2, 4))}"
 
     return verse

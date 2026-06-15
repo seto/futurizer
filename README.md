@@ -28,20 +28,20 @@ pip install futurizer
 ## Usage
 
 ```bash
-futurize input.txt --noise 0.15
+futurize input.txt
 ```
 
 Alternatively, you can pipe text directly through standard input:
 
 ```bash
-cat text.txt | futurize - --noise 0.10 --seed 66
+cat input.txt | futurize - 
 ```
 
 ## Options
 
 | Option         | Description                                                            | Default         |
 | -------------- | ---------------------------------------------------------------------- | --------------- |
-| `file`         | Path to the input text file. Use `-` for standard input                | `-` (stdin)     |
+| `input`        | Path to the input text file. Use `-` for standard input.               | **(required)**  |
 | `-l`, `--lang` | Language of the input text. See [Language support](#language-support). | `it`            |
 | `--noise`      | Probability threshold for onomatopoeic bursts and line corruption.     | `0.15`          |
 | `--seed`       | Random seed for reproducibility.                                       | `None` (random) |
@@ -54,9 +54,11 @@ The engine utilizes language-specific corpora containing part-of-speech suffix h
 
 ## Historical Note
 
-Futurizer draws on the typographic aesthetic of [Italian Futurism](https://en.wikipedia.org/wiki/Italian_Futurism) — onomatopoeias, _parole in libertà_, fragmented syntax — as found in works like Marinetti's Zang Tumb Tumb (1914) and Palazzeschi's sound poetry.
+Futurizer draws on the typographic aesthetic of Italian Futurism — onomatopoeias, _parole in libertà_, fragmented syntax — as found in works like Marinetti's Zang Tumb Tumb (1914) and Palazzeschi's sound poetry.
 
-Futurism was an avant-garde movement that influenced Dada, Russian Constructivism, and concrete poetry. Marinetti's later alignment with Italian fascism is a documented historical fact, not something this project celebrates. The interest here is purely in the formal experiment: what happens when you run nineteenth-century verse, or corporate buzzword soup, through a machine that thinks like a 1909 manifesto.
+[Futurism](https://en.wikipedia.org/wiki/Futurism) was an avant-garde movement that influenced Dada, Russian Constructivism, and concrete poetry. Marinetti's later alignment with Italian fascism is a documented historical fact, not something this project celebrates.
+
+The interest here is purely in the formal experiment: what happens when you run nineteenth-century verse, or corporate buzzword soup, through a machine that thinks like a 1909 manifesto.
 
 ## License
 

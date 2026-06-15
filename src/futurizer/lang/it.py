@@ -112,7 +112,7 @@ VERB_TO_INFINITIVE = [
     ("irò", "ire"), ("irai", "ire"), ("irà", "ire"),
     ("ano", "are"), ("amo", "are"),
     ("ono", "ere"),
-    ("a", "are"), ("e", "ere"), ("o", "are"),  # Short-form fallbacks
+    ("a", "are"), ("e", "ere"), ("o", "are"),  # Heuristic fallback: risky but OK on long words
 ]
 
 MECHANICAL_WORDS = [
@@ -181,6 +181,6 @@ LANG_DATA = {
         "verb_to_infinitive": VERB_TO_INFINITIVE,
     },
     "mechanical_words": MECHANICAL_WORDS,
-    "onomatopeia_corpus": ONOMATOPOEIA_CORPUS,
+    "onomatopoeia_corpus": ONOMATOPOEIA_CORPUS,
     "noise_sequences": NOISE_SEQUENCES,
 }
