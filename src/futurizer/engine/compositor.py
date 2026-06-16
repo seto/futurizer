@@ -29,7 +29,7 @@ from .transformer import FuturistTransformer
 
 _SEPARATORS = ["×", ">", "/", "+", "—", "::"]
 _BURST_SEPARATORS = ["ZANG", "TUMB", "CRACK", "SSSSS", "BRRR"]
-_PREFIX_NOISE_RATIO = 0.6
+_PREFIX_NOISE_RATIO = 0.3
 
 
 def futurize(text: str, lang_data: dict, noise: float) -> str:
@@ -134,18 +134,17 @@ def _tag(word: str, lang_rules: dict) -> str:
         if w.endswith(sfx) and len(w) > len(sfx) + 1:
             return "NOUN"
 
-    # Verb infinitives truncated by apocope (poetic/archaic register):
-    # "cantar" → "cantare", "veder" → "vedere", "partir" → "partire"
-    if w.endswith(("ar", "er", "ir")) and len(w) > 4:
-        return "VERB"
-
     if len(w) > 3:
-        if w.endswith(("a", "e")) and len(w) >= 4:
+        # Verb infinitives truncated by apocope (poetic/archaic register):
+        # "cantar" → "cantare", "veder" → "vedere", "partir" → "partire"
+        if w.endswith(("ar", "er", "ir")):
             return "VERB"
-        if w.endswith(("o", "i")):
+
+        # Typical nouns/adjectives for the Italian language
+        if w.endswith(("a", "e", "i", "o")):
             return "NOUN"
 
-    return "NOUN"
+    return "OTHER"
 
 
 def _compose(tokens_transformed: list[str], noise: float) -> str:
@@ -185,12 +184,11 @@ def _corrupt(verse: str, markov: MarkovChain, lang_data: dict, noise: float) -> 
         return verse
 
     noise_seqs = lang_data.get("noise_sequences", [])
-    roll = random.random()
 
-    if roll < noise * _PREFIX_NOISE_RATIO and noise_seqs:
-        return f"{random.choice(noise_seqs)} > {verse}"
+    if random.random() < (noise * _PREFIX_NOISE_RATIO) and noise_seqs:
+        verse = f"{random.choice(noise_seqs)} > {verse}"
 
-    elif roll < noise:
-        return f"{verse} > {markov.generate(random.randint(2, 4))}"
+    if random.random() < noise:
+        verse = f"{verse} > {markov.generate(random.randint(2, 4))}"
 
     return verse
