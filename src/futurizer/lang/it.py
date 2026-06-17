@@ -177,6 +177,8 @@ NOISE_SEQUENCES = [
     "FFFFF SSSSS ZANG",
 ]
 
+BURST_SEPARATORS = ["ZANG", "TUMB", "CRACK", "SSSSS", "BRRR", "CLOFF", "CLOP", "CLOCH"]
+
 LANG_DATA = {
     "name": "Italiano",
     "code": "it",
@@ -187,4 +189,5 @@ LANG_DATA = {
     "mechanical_words": MECHANICAL_WORDS,
     "onomatopoeia_corpus": ONOMATOPOEIA_CORPUS,
     "noise_sequences": NOISE_SEQUENCES,
+    "burst_separators": BURST_SEPARATORS,
 }

@@ -28,7 +28,6 @@ from .markov import MarkovChain
 from .transformer import FuturistTransformer
 
 _SEPARATORS = ["×", ">", "/", "+", "—", "::"]
-_BURST_SEPARATORS = ["ZANG", "TUMB", "CRACK", "SSSSS", "BRRR"]
 _PREFIX_NOISE_RATIO = 0.3
 
 
@@ -61,7 +60,7 @@ def futurize(text: str, lang_data: dict, noise: float) -> str:
             result = transformer.transform(word, pos)
             transformed.append(result)
 
-        verse = _compose(transformed, noise=noise)
+        verse = _compose(transformed, lang_data, noise=noise)
         verse = _corrupt(verse, markov, lang_data, noise=noise)
         output_verses.append(verse)
 
@@ -147,7 +146,7 @@ def _tag(word: str, lang_rules: dict) -> str:
     return "OTHER"
 
 
-def _compose(tokens_transformed: list[str], noise: float) -> str:
+def _compose(tokens_transformed: list[str], lang_data: dict, noise: float) -> str:
     """Assemble transformed tokens with futurist separators.
 
     Injects random onomatopoeic bursts between tokens at the
@@ -157,6 +156,8 @@ def _compose(tokens_transformed: list[str], noise: float) -> str:
     cleaned = [t for t in tokens_transformed if t]
     if not cleaned:
         return ""
+    
+    burst_seps = lang_data.get("burst_separators", [])
 
     parts = []
     for i, tok in enumerate(cleaned):
@@ -164,8 +165,8 @@ def _compose(tokens_transformed: list[str], noise: float) -> str:
         if i < len(cleaned) - 1:
             sep = random.choice(_SEPARATORS)
             parts.append(sep)
-            if random.random() < noise:
-                burst = random.choice(_BURST_SEPARATORS)
+            if random.random() < noise and burst_seps:
+                burst = random.choice(burst_seps)
                 parts.append(burst)
                 parts.append(random.choice(_SEPARATORS))
 
