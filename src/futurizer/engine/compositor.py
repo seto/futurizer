@@ -165,7 +165,7 @@ def _compose(tokens_transformed: list[str], lang_data: dict, noise: float) -> st
         if i < len(cleaned) - 1:
             sep = random.choice(_SEPARATORS)
             parts.append(sep)
-            if random.random() < noise and burst_seps:
+            if burst_seps and random.random() < noise:
                 burst = random.choice(burst_seps)
                 parts.append(burst)
                 parts.append(random.choice(_SEPARATORS))
@@ -186,7 +186,7 @@ def _corrupt(verse: str, markov: MarkovChain, lang_data: dict, noise: float) -> 
 
     noise_seqs = lang_data.get("noise_sequences", [])
 
-    if random.random() < (noise * _PREFIX_NOISE_RATIO) and noise_seqs:
+    if noise_seqs and random.random() < (noise * _PREFIX_NOISE_RATIO):
         verse = f"{random.choice(noise_seqs)} > {verse}"
 
     if random.random() < noise:
