@@ -121,6 +121,7 @@ VERB_TO_INFINITIVE = [
     ("irò", "ire"), ("irai", "ire"), ("irà", "ire"),
     ("ano", "are"), ("amo", "are"),
     ("ono", "ere"),
+    ("ar", "are"), ("er", "ere"), ("ir", "ire"),
     # NOTE: Heuristic fallback: Reached when a verb form doesn't match 
     # any more specific suffix above, either because none applies, or
     # because it does but fails that suffix's length guard (len(w) > len(sfx) + 2).
