@@ -42,6 +42,9 @@ TAGGER_RULES = {
     },
     "pronouns": {
         "io", "tu", "lui", "lei", "noi", "voi", "loro",
+        # NOTE: "lo", "la", "le", "li" are also articles; the lookup order in
+        # _tag() checks "articles" first, so clitic usage ("lo vedo") is
+        # always tagged ART, never PRON. Accepted: article usage is far more frequent.
         "mi", "ti", "si", "ci", "vi", "lo", "la", "li", "le",
         "me", "te", "sé", "mio", "tuo", "suo",
     },
@@ -94,14 +97,10 @@ TAGGER_RULES = {
 # Each tuple is suffix_to_strip, suffix_to_append, it is applied in order
 # from most specific to least specific to avoid premature matches
 VERB_TO_INFINITIVE = [
-    ("ando", "are"),
-    ("endo", "ere"),
-    ("ato", "are"),
-    ("uto", "ere"),
-    ("ito", "ire"),
-    ("arono", "are"),
-    ("erono", "ere"),
-    ("irono", "ire"),
+    ("are", "are"), ("ere", "ere"), ("ire", "ire"),  # Pass-through: already infinitive
+    ("ando", "are"), ("endo", "ere"),
+    ("ato", "are"), ("uto", "ere"), ("ito", "ire"),
+    ("arono", "are"), ("erono", "ere"), ("irono", "ire"),
     ("ettero", "ere"),
     ("ava", "are"), ("avi", "are"), ("avo", "are"),
     ("avano", "are"), ("avate", "are"), ("avamo", "are"),
@@ -110,13 +109,37 @@ VERB_TO_INFINITIVE = [
     ("iva", "ire"), ("ivi", "ire"), ("ivo", "ire"),
     ("ivano", "ire"), ("ivate", "ire"), ("ivamo", "ire"),
     ("isco", "ire"), ("isce", "ire"), ("iscono", "ire"),
-    ("iamo", "are"),  # Ambiguous, but correct ~60% of the time
+    # NOTE: "-iamo" is the 1st person plural present tense ending shared
+    # by all three conjugations (-are, -ere, -ire), so it does not provide any
+    # signal about which infinitive to reconstruct.
+    # We default to "-are" because it is the productive conjugation in Italian
+    # (almost all neologisms are -are), making it the safest bet on unseen text.
+    # Approximate estimate, not measured on a corpus.
+    ("iamo", "are"),
     ("erò", "ere"), ("erai", "ere"), ("erà", "ere"),
     ("arò", "are"), ("arai", "are"), ("arà", "are"),
     ("irò", "ire"), ("irai", "ire"), ("irà", "ire"),
     ("ano", "are"), ("amo", "are"),
     ("ono", "ere"),
-    ("a", "are"), ("e", "ere"), ("o", "are"),  # Heuristic fallback: risky but OK on long words
+    # NOTE: Heuristic fallback: Reached when a verb form doesn't match 
+    # any more specific suffix above, either because none applies, or
+    # because it does but fails that suffix's length guard (len(w) > len(sfx) + 2).
+    # That guard is flat regardless of pattern length, so it penalizes
+    # the longer, safer compound patterns (avamo/avate/avano/evamo/...,
+    # 5 chars, near-zero false-positive risk) just as hard as the
+    # shorter, more ambiguous ones (amo/ano/ono). Any verb with a
+    # 1-2 letter stem at imperfect plural falls through here even when
+    # a perfectly correct compound pattern exists for it: "amavamo"
+    # (← amare, stem "am-") needs len > 7 for ("avamo", "are") and has
+    # exactly 7, so it's rejected and matched instead by the shorter
+    # ("amo", "are"), yielding "AMAVARE" instead of "AMARE". Same
+    # mechanism hits "stava"/"dava" (stems "st-"/"d-"). Not confined to
+    # rare irregulars or to long words, it's a property of stem length,
+    # and it can misfire on common regular forms too. It still earns its
+    # place for genuinely unmatched longer forms, e.g. "cresce" (3rd
+    # singular of "crescere", not covered by "-isce") correctly becomes
+    # "CRESCERE" via the bare "e" rule.
+    ("a", "are"), ("e", "ere"), ("o", "are"),
 ]
 
 MECHANICAL_WORDS = [
