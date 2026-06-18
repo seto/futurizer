@@ -35,18 +35,14 @@ class FuturistTransformer:
     Function words (articles, prepositions, conjunctions, pronouns) are deleted.
     """
 
-    # Thresholds to style randomly each POS category
-    # NOTE: Evaluate to move to language specific corpus
-    _VERB_ELONGATE_THRESHOLD = 0.35
-    _VERB_REPEAT_THRESHOLD = 0.65
-    _NOUN_PREFIX_THRESHOLD = 0.40
-    _NOUN_PLAIN_THRESHOLD = 0.70
-    _ADJ_DROP_CHANCE = 0.50
-
     def __init__(self, lang_data: dict):
         self.rules = lang_data["rules"]
         self.mechanical_words = lang_data["mechanical_words"]
         self.markov = MarkovChain(lang_data["onomatopoeia_corpus"])
+        self.thresholds = lang_data.get("thresholds", {})
+
+    def _get_threshold(self, key: str, default: float) -> float:
+        return self.thresholds.get(key, default)
 
     def _to_infinitive(self, word: str) -> str:
         """Return the approximate infinitive form of a verb in uppercase.
@@ -67,13 +63,13 @@ class FuturistTransformer:
         inf = self._to_infinitive(word)
         roll = random.random()
 
-        if roll < self._VERB_ELONGATE_THRESHOLD:
+        if roll < self._get_threshold("verb_elongate", 0.35):
             # Elongated echo: URLARE → URLAREEEEE
             if inf and inf[-1] in "aeiouAEIOU":
                 return inf + inf[-1] * random.randint(2, 4)
             return inf + "RRRR"
 
-        if roll < self._VERB_REPEAT_THRESHOLD:
+        if roll < self._get_threshold("verb_repeat", 0.65):
             # Repetition: SALIRE → SALIRE + SALIRE + SALIRE
             n = random.randint(2, 3)
             return " + ".join([inf] * n)
@@ -86,16 +82,16 @@ class FuturistTransformer:
         mech = random.choice(self.mechanical_words)
         roll = random.random()
 
-        if roll < self._NOUN_PREFIX_THRESHOLD:
+        if roll < self._get_threshold("noun_prefix", 0.40):
             return f"{w}-{mech}"
-        if roll < self._NOUN_PLAIN_THRESHOLD:
+        if roll < self._get_threshold("noun_plain", 0.70):
             # Uppercase only as the compositor will add separator
             return w
 
         return f"{mech}-{w}"
 
     def _futurize_adj(self, word: str) -> str | None:
-        if random.random() < self._ADJ_DROP_CHANCE:
+        if random.random() < self._get_threshold("adj_drop", 0.50):
             return None
 
         return word.upper()

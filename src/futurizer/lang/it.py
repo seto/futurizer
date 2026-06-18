@@ -203,6 +203,14 @@ NOISE_SEQUENCES = [
 
 BURST_SEPARATORS = ["ZANG", "TUMB", "CRACK", "SSSSS", "BRRR", "CLOFF", "CLOP", "CLOCH"]
 
+THRESHOLDS = {
+    "verb_elongate": 0.35,
+    "verb_repeat": 0.65,
+    "noun_prefix": 0.40,
+    "noun_plain": 0.70,
+    "adj_drop": 0.50,
+}
+
 LANG_DATA = {
     "name": "Italiano",
     "code": "it",
@@ -214,4 +222,5 @@ LANG_DATA = {
     "onomatopoeia_corpus": ONOMATOPOEIA_CORPUS,
     "noise_sequences": NOISE_SEQUENCES,
     "burst_separators": BURST_SEPARATORS,
+    "thresholds": THRESHOLDS,
 }
