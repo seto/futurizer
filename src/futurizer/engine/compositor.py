@@ -156,7 +156,7 @@ def _compose(tokens_transformed: list[str], lang_data: dict, noise: float) -> st
     cleaned = [t for t in tokens_transformed if t]
     if not cleaned:
         return ""
-    
+
     burst_seps = lang_data.get("burst_separators", [])
 
     parts = []
