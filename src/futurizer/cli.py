@@ -34,11 +34,9 @@ For more details, run with `-h` or `--help`.
 """
 
 import argparse
-import random
 import sys
 
-from .engine.compositor import futurize
-
+from . import api
 
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
@@ -54,15 +52,15 @@ def main(argv=None):
     ap.add_argument(
         "-l",
         "--lang",
-        choices=["it", "en"],
-        default="it",
-        help="language code (default: it)",
+        choices=sorted(api.languages()),
+        default=api.DEFAULT_LANG,
+        help=f"language code (default: {api.DEFAULT_LANG})",
     )
     ap.add_argument(
         "--noise",
         type=float,
-        default=0.15,
-        help="corruption noise level (default: 0.15)",
+        default=api.DEFAULT_NOISE,
+        help=f"corruption noise level (default: {api.DEFAULT_NOISE})",
     )
     ap.add_argument(
         "--seed",
@@ -72,19 +70,6 @@ def main(argv=None):
     )
 
     args = ap.parse_args(argv)
-
-    if args.seed is not None:
-        random.seed(args.seed)
-
-    try:
-        if args.lang == "it":
-            from .lang.it import LANG_DATA
-        elif args.lang == "en":
-            from .lang.en import LANG_DATA
-
-    except ImportError:
-        print(f"Error: language data for '{args.lang}' not found.", file=sys.stderr)
-        return 1
 
     try:
         if args.input == "-":
@@ -105,8 +90,13 @@ def main(argv=None):
         print("Error: input is empty.", file=sys.stderr)
         return 1
 
-    print(futurize(text, lang_data=LANG_DATA, noise=args.noise))
-    return 0
+    try:
+        print(api.futurize(text,lang=args.lang,noise=args.noise,seed=args.seed))
+        return 0
+    
+    except api.UnsupportedLanguageError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":
