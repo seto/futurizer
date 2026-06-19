@@ -17,7 +17,4 @@ dist/
 # Testing
 .pytest_cache/
 .coverage
-
-# Data
-data/raw/
-data/processed/
+data/
