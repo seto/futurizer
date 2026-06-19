@@ -31,15 +31,19 @@ _SEPARATORS = ["×", ">", "/", "+", "—", "::"]
 _PREFIX_NOISE_RATIO = 0.3
 
 
-def futurize(text: str, lang_data: dict, noise: float) -> str:
+def futurize(text: str, lang_data: dict, noise: float, rng: random.Random | None = None) -> str:
     """Transform plain text into futurist-style output.
 
     Each line is parsed, POS-tagged, transformed, composed with
     futurist separators, and optionally corrupted with onomatopoeia.
+
+    If `rng` is omitted, a fresh random.Random() is used internally;
+    pass one to make output reproducible without touching global state.
     """
 
     lang_rules = lang_data["tagger_rules"]
-    transformer = FuturistTransformer(lang_data)
+    rng = rng if rng is not None else random.Random()
+    transformer = FuturistTransformer(lang_data, rng=rng)
     markov = transformer.markov
 
     parsed_verses = _parse(text)
@@ -60,8 +64,8 @@ def futurize(text: str, lang_data: dict, noise: float) -> str:
             result = transformer.transform(word, pos)
             transformed.append(result)
 
-        verse = _compose(transformed, lang_data, noise=noise)
-        verse = _corrupt(verse, markov, lang_data, noise=noise)
+        verse = _compose(transformed, lang_data, noise=noise, rng=rng)
+        verse = _corrupt(verse, markov, lang_data, noise=noise, rng=rng)
         output_verses.append(verse)
 
     return "\n".join(output_verses)
@@ -146,7 +150,7 @@ def _tag(word: str, lang_rules: dict) -> str:
     return "OTHER"
 
 
-def _compose(tokens_transformed: list[str], lang_data: dict, noise: float) -> str:
+def _compose(tokens_transformed: list[str], lang_data: dict, noise: float, rng: random.Random) -> str:
     """Assemble transformed tokens with futurist separators.
 
     Injects random onomatopoeic bursts between tokens at the
@@ -163,17 +167,17 @@ def _compose(tokens_transformed: list[str], lang_data: dict, noise: float) -> st
     for i, tok in enumerate(cleaned):
         parts.append(tok)
         if i < len(cleaned) - 1:
-            sep = random.choice(_SEPARATORS)
+            sep = rng.choice(_SEPARATORS)
             parts.append(sep)
-            if burst_seps and random.random() < noise:
-                burst = random.choice(burst_seps)
+            if burst_seps and rng.random() < noise:
+                burst = rng.choice(burst_seps)
                 parts.append(burst)
-                parts.append(random.choice(_SEPARATORS))
+                parts.append(rng.choice(_SEPARATORS))
 
     return " ".join(parts)
 
 
-def _corrupt(verse: str, markov: MarkovChain, lang_data: dict, noise: float) -> str:
+def _corrupt(verse: str, markov: MarkovChain, lang_data: dict, noise: float, rng: random.Random) -> str:
     """Inject onomatopoeic noise at the start or end of a verse.
 
     Prefix noise (a sequence from the corpus) occurs at `noise * _PREFIX_NOISE_RATIO`
@@ -186,10 +190,10 @@ def _corrupt(verse: str, markov: MarkovChain, lang_data: dict, noise: float) -> 
 
     noise_seqs = lang_data.get("noise_sequences", [])
 
-    if noise_seqs and random.random() < (noise * _PREFIX_NOISE_RATIO):
-        verse = f"{random.choice(noise_seqs)} > {verse}"
+    if noise_seqs and rng.random() < (noise * _PREFIX_NOISE_RATIO):
+        verse = f"{rng.choice(noise_seqs)} > {verse}"
 
-    if random.random() < noise:
-        verse = f"{verse} > {markov.generate(random.randint(2, 4))}"
+    if rng.random() < noise:
+        verse = f"{verse} > {markov.generate(rng.randint(2, 4))}"
 
     return verse

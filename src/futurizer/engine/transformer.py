@@ -35,11 +35,12 @@ class FuturistTransformer:
     Function words (articles, prepositions, conjunctions, pronouns) are deleted.
     """
 
-    def __init__(self, lang_data: dict):
+    def __init__(self, lang_data: dict, rng: random.Random | None = None):
         self.rules = lang_data["rules"]
         self.mechanical_words = lang_data["mechanical_words"]
-        self.markov = MarkovChain(lang_data["onomatopoeia_corpus"])
         self.thresholds = lang_data.get("thresholds", {})
+        self.rng = rng if rng is not None else random.Random()
+        self.markov = MarkovChain(lang_data["onomatopoeia_corpus"], rng=self.rng)
 
     def _get_threshold(self, key: str, default: float) -> float:
         return self.thresholds.get(key, default)
@@ -61,26 +62,26 @@ class FuturistTransformer:
 
     def _futurize_verb(self, word: str) -> str:
         inf = self._to_infinitive(word)
-        roll = random.random()
+        roll = self.rng.random()
 
         if roll < self._get_threshold("verb_elongate", 0.35):
             # Elongated echo: URLARE → URLAREEEEE
             if inf and inf[-1] in "aeiouAEIOU":
-                return inf + inf[-1] * random.randint(2, 4)
+                return inf + inf[-1] * self.rng.randint(2, 4)
             return inf + "RRRR"
 
         if roll < self._get_threshold("verb_repeat", 0.65):
             # Repetition: SALIRE → SALIRE + SALIRE + SALIRE
-            n = random.randint(2, 3)
+            n = self.rng.randint(2, 3)
             return " + ".join([inf] * n)
 
-        ono = self.markov.generate(random.randint(2, 3))
+        ono = self.markov.generate(self.rng.randint(2, 3))
         return f"{inf}-{ono}"
 
     def _futurize_noun(self, word: str) -> str:
         w = word.upper()
-        mech = random.choice(self.mechanical_words)
-        roll = random.random()
+        mech = self.rng.choice(self.mechanical_words)
+        roll = self.rng.random()
 
         if roll < self._get_threshold("noun_prefix", 0.40):
             return f"{w}-{mech}"
@@ -91,7 +92,7 @@ class FuturistTransformer:
         return f"{mech}-{w}"
 
     def _futurize_adj(self, word: str) -> str | None:
-        if random.random() < self._get_threshold("adj_drop", 0.50):
+        if self.rng.random() < self._get_threshold("adj_drop", 0.50):
             return None
 
         return word.upper()

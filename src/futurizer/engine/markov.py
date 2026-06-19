@@ -33,8 +33,9 @@ class MarkovChain:
     that follow it. Generation walks that graph randomly.
     """
 
-    def __init__(self, corpus: list[str]):
+    def __init__(self, corpus: list[str], rng: random.Random | None = None):
         self.chain: dict[str, list[str]] = {}
+        self.rng = rng if rng is not None else random.Random()
         self._train(corpus)
 
     def _train(self, corpus: list[str]) -> None:
@@ -54,13 +55,13 @@ class MarkovChain:
         if not self.chain:
             return "ZANG"
 
-        current = random.choice(list(self.chain.keys()))
+        current = self.rng.choice(list(self.chain.keys()))
         result = [current]
         for _ in range(length - 1):
             successors = self.chain.get(current)
             if not successors:
                 break
-            current = random.choice(successors)
+            current = self.rng.choice(successors)
             result.append(current)
 
         return "-".join(result)
