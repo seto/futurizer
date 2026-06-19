@@ -136,7 +136,7 @@ NOISE_SEQUENCES = [
 
 BURST_SEPARATORS = ["BLAST", "THUB", "CRACK", "BOOM", "SHHH", "CHUFF", "BLIP", "ZAP"]
 
-THRESHOLDS = {
+TRANSFORMATION_THRESHOLDS = {
     "verb_elongate": 0.35,
     "verb_repeat": 0.65,
     "noun_prefix": 0.40,
@@ -155,5 +155,5 @@ LANG_DATA = {
     "onomatopoeia_corpus": ONOMATOPOEIA_CORPUS,
     "noise_sequences": NOISE_SEQUENCES,
     "burst_separators": BURST_SEPARATORS,
-    "thresholds": THRESHOLDS,
+    "thresholds": TRANSFORMATION_THRESHOLDS,
 }
