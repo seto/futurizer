@@ -122,7 +122,7 @@ VERB_TO_INFINITIVE = [
     ("ano", "are"), ("amo", "are"),
     ("ono", "ere"),
     ("ar", "are"), ("er", "ere"), ("ir", "ire"),
-    # NOTE: Heuristic fallback: Reached when a verb form doesn't match 
+    # NOTE: Heuristic fallback: Reached when a verb form doesn't match
     # any more specific suffix above, either because none applies, or
     # because it does but fails that suffix's length guard (len(w) > len(sfx) + 2).
     # That guard is flat regardless of pattern length, so it penalizes

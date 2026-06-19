@@ -96,7 +96,7 @@ MECHANICAL_WORDS = [
 ]
 
 # Onomatopoeic sequences for training the Markov chain,
-# heavily inspired by Vorticist typography, industrial din, 
+# heavily inspired by Vorticist typography, industrial din,
 # and BLAST magazine
 ONOMATOPOEIA_CORPUS = [
     "BLAST HUM CLICK CLACK CHUFF",
