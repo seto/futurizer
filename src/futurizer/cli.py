@@ -38,6 +38,7 @@ import sys
 
 from . import api
 
+
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
 
@@ -91,9 +92,9 @@ def main(argv=None):
         return 1
 
     try:
-        print(api.futurize(text,lang=args.lang,noise=args.noise,seed=args.seed))
+        print(api.futurize(text, lang=args.lang, noise=args.noise, seed=args.seed))
         return 0
-    
+
     except api.UnsupportedLanguageError as e:
         print(f"Error: {e}", file=sys.stderr)
         return 1

@@ -31,7 +31,12 @@ _SEPARATORS = ["×", ">", "/", "+", "—", "::"]
 _PREFIX_NOISE_RATIO = 0.3
 
 
-def futurize(text: str, lang_data: dict, noise: float, rng: random.Random | None = None) -> str:
+def futurize(
+    text: str,
+    lang_data: dict,
+    noise: float,
+    rng: random.Random | None = None,
+) -> str:
     """Transform plain text into futurist-style output.
 
     Each line is parsed, POS-tagged, transformed, composed with
@@ -150,7 +155,12 @@ def _tag(word: str, lang_rules: dict) -> str:
     return "OTHER"
 
 
-def _compose(tokens_transformed: list[str], lang_data: dict, noise: float, rng: random.Random) -> str:
+def _compose(
+    tokens_transformed: list[str],
+    lang_data: dict,
+    noise: float,
+    rng: random.Random,
+) -> str:
     """Assemble transformed tokens with futurist separators.
 
     Injects random onomatopoeic bursts between tokens at the
@@ -177,7 +187,13 @@ def _compose(tokens_transformed: list[str], lang_data: dict, noise: float, rng: 
     return " ".join(parts)
 
 
-def _corrupt(verse: str, markov: MarkovChain, lang_data: dict, noise: float, rng: random.Random) -> str:
+def _corrupt(
+    verse: str,
+    markov: MarkovChain,
+    lang_data: dict,
+    noise: float,
+    rng: random.Random,
+) -> str:
     """Inject onomatopoeic noise at the start or end of a verse.
 
     Prefix noise (a sequence from the corpus) occurs at `noise * _PREFIX_NOISE_RATIO`

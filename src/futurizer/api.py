@@ -52,7 +52,12 @@ def languages() -> dict[str, str]:
     return {code: name for code, (name, _) in _LANGUAGES.items()}
 
 
-def futurize(text: str, lang: str = DEFAULT_LANG, noise: float = DEFAULT_NOISE, seed: int | None = None) -> str:
+def futurize(
+    text: str,
+    lang: str = DEFAULT_LANG,
+    noise: float = DEFAULT_NOISE,
+    seed: int | None = None,
+) -> str:
     """Transform plain text into futurist-style output.
 
     Args:
@@ -89,4 +94,3 @@ def _load_lang_data(lang: str) -> dict:
     module = importlib.import_module(module_path)
 
     return module.LANG_DATA
-

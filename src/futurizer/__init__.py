@@ -20,8 +20,8 @@ from .api import (
     DEFAULT_NOISE,
     FuturizerError,
     UnsupportedLanguageError,
-    languages,
     futurize,
+    languages,
 )
 
 __all__ = [
