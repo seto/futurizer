@@ -74,9 +74,6 @@ output = futurize(text)
 
 # With explicit language and noise level
 output = futurize(text, lang="en", noise=0.3)
-
-# Reproducible output
-output = futurize(text, seed=42)
 ```
 
 To see the list of supported lanaguages:
