@@ -20,6 +20,19 @@ classifiers = [
     "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     "Operating System :: OS Independent",
 ]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "black~=26.5",
+    "build~=1.5",
+    "invoke~=3.0",
+    "isort~=8.0",
+    "pytest~=9.1",
+    "pytest-cov~=7.1",
+    "twine~=6.2"
+]
+
 
 [project.urls]
 "Source" = "https://github.com/seto/futurizer"
