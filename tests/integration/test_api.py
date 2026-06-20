@@ -44,7 +44,7 @@ def test_unsupported_language_raises():
 def test_languages_contains_defaults():
     langs = futurizer.languages()
     assert "it" in langs
-    assert "en" in langs 
+    assert "en" in langs
 
 
 def test_english_lang():
