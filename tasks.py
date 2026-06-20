@@ -10,8 +10,12 @@ def format(ctx, targets="src tests"):
 
 
 @task
-def test(ctx):
-    ctx.run("pytest")
+def test(ctx, suite=""):
+    """Run the test suite. Pass suite=unit or suite=integration to filter."""
+    if suite:
+        ctx.run(f"pytest -v tests/{suite}")
+    else:
+        ctx.run("pytest -v tests/")
 
 
 @task
