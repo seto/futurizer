@@ -126,4 +126,5 @@ a 1909 manifesto.
 This program is licensed under the
 [GNU Affero General Public License v3.0 or later](https://www.gnu.org/licenses/agpl-3.0.html)
 (AGPL-3.0+).  
-See the [LICENSE](LICENSE) file for details.
+See the [LICENSE](https://github.com/seto/futurizer/blob/master/LICENSE) file for
+details.
