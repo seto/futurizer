@@ -35,7 +35,7 @@ dev = [
 
 
 [project.urls]
-"Source" = "https://github.com/seto/futurizer"
+Source = "https://github.com/seto/futurizer"
 
 [project.scripts]
 futurize = "futurizer.cli:main"
