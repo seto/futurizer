@@ -29,6 +29,6 @@ __all__ = [
     "DEFAULT_NOISE",
     "FuturizerError",
     "UnsupportedLanguageError",
-    "languages",
     "futurize",
+    "languages",
 ]
