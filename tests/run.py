@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """Run the full test suite.
 
 The test suit can be executed from the command line using the following
