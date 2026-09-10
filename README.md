@@ -5,7 +5,9 @@
   <a href="https://pypi.org/project/futurizer/"><img src="https://img.shields.io/pypi/v/futurizer.svg?maxAge=86400&color=blue" alt="Version"></a>
   <a href="https://pypi.org/project/futurizer"><img src="https://img.shields.io/pypi/pyversions/futurizer.svg" alt="Supported Versions"></a>
   <a href="https://github.com/seto/futurizer/actions"><img src="https://img.shields.io/github/actions/workflow/status/seto/futurizer/tests.yml?label=tests&logo=github" alt="Tests"></a>
+  <a href="https://www.mypy-lang.org/"><img src="https://www.mypy-lang.org/static/mypy_badge.svg" alt="Checked with mypy"></a>
   <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code_style-black-000000.svg" alt="Code Style: Black"></a>
+  <a href="https://github.com/astral-sh/ruff"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Linting: Ruff"></a>
 </p>
 
 **Futurizer** is a rule-based linguistic transformation engine that deconstructs plain
