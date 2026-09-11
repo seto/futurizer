@@ -29,12 +29,8 @@ def typecheck(ctx, targets="src tests"):
 
 
 @task
-def test(ctx, suite=""):
-    """Run the test suite. Pass suite=unit or suite=integration to filter."""
-    if suite:
-        ctx.run(f"pytest -v tests/{suite}")
-    else:
-        ctx.run("pytest -v tests/")
+def test(ctx, extras="--cov=futurizer --cov-report=term-missing --color=yes"):
+    ctx.run(f"pytest -v {extras}")
 
 
 @task
