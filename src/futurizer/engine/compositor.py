@@ -69,7 +69,7 @@ def futurize(
             result = transformer.transform(word, pos)
             transformed.append(result)
 
-        verse = _compose(transformed, lang_data, noise=noise, rng=rng)
+        verse = _compose([t for t in transformed if t], lang_data, noise=noise, rng=rng)
         verse = _corrupt(verse, markov, lang_data, noise=noise, rng=rng)
         output_verses.append(verse)
 
@@ -83,7 +83,7 @@ def _parse(text: str) -> list[list[tuple[str, str]]]:
     where type is one of 'word', 'punct', or 'space'.
     """
 
-    verses = []
+    verses: list[list[tuple[str, str]]] = []
     for line in text.splitlines():
         line = line.strip()
         if not line:

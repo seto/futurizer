@@ -37,7 +37,7 @@ import sys
 from . import api
 
 
-def main(argv=None):
+def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
 
     ap = argparse.ArgumentParser(
