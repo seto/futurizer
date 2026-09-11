@@ -35,7 +35,7 @@ def test_empty_input_returns_empty():
 def test_unsupported_language_raises():
     try:
         futurizer.futurize("test", lang="zz")
-        assert False
+        assert AssertionError("Unsupported language did not raise an error")
     except futurizer.UnsupportedLanguageError:
         # futurize() must raise UnsupportedLanguageError for unsupported languages
         pass
