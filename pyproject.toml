@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=83.0.0", "wheel"]
+requires = ["setuptools>=84.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -25,9 +25,9 @@ dependencies = []
 [project.optional-dependencies]
 dev = [
     "black~=26.5",
-    "build~=1.5",
+    "build~=1.6",
     "invoke~=3.0",
-    "isort~=8.0",
+    "isort~=9.0",
     "mypy~=2.3",
     "pytest~=9.1",
     "pytest-cov~=7.1",
