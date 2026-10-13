@@ -99,7 +99,7 @@ Unsupported language codes raise `futurizer.UnsupportedLanguageError`.
 
 ## Language Support
 
-The engine utilizes language-specific corpora containing part-of-speech suffix
+The engine utilizes language-specific collections containing part-of-speech suffix
 heuristics, verb lemmatization patterns, and targeted industrial glossaries.
 
 - Italian (it): Built around classic Italian literary texts, loaded with mechanical
