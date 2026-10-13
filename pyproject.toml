@@ -23,20 +23,6 @@ classifiers = [
 ]
 dependencies = []
 
-[project.optional-dependencies]
-dev = [
-    "black~=26.5",
-    "build~=1.6",
-    "invoke~=3.0",
-    "isort~=9.0",
-    "mypy~=2.3",
-    "pytest~=9.1",
-    "pytest-cov~=7.1",
-    "ruff~=0.16",
-    "twine~=7.0"
-]
-
-
 [project.urls]
 Source = "https://github.com/seto/futurizer"
 
