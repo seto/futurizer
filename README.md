@@ -119,9 +119,9 @@ influenced Dada, Russian Constructivism, and concrete poetry. Marinetti's later
 alignment with Italian fascism is a documented historical fact, not something this
 project celebrates.
 
-The interest here is purely in the formal experiment: what happens when you run
-nineteenth-century verse, or corporate buzzword soup, through a machine that thinks like
-a 1909 manifesto.
+The interest here is purely in the formal and parodic experiment: what happens when you
+run nineteenth-century verse, or corporate buzzword soup, through a machine that thinks
+like a 1909 manifesto.
 
 ## License
 
