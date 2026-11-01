@@ -1,9 +1,9 @@
-black~=26.5
+black~=26.10
 build~=1.6
 invoke~=3.0
 isort~=9.0
-mypy~=2.3
+mypy~=2.4
 pytest~=9.1
 pytest-cov~=7.1
-ruff~=0.16
+ruff~=0.17
 twine~=7.0
