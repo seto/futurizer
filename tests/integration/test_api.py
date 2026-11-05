@@ -1,5 +1,7 @@
 import random
 
+import pytest
+
 import futurizer
 
 
@@ -33,12 +35,8 @@ def test_empty_input_returns_empty():
 
 
 def test_unsupported_language_raises():
-    try:
+    with pytest.raises(futurizer.UnsupportedLanguageError):
         futurizer.futurize("test", lang="zz")
-        assert AssertionError("Unsupported language did not raise an error")
-    except futurizer.UnsupportedLanguageError:
-        # futurize() must raise UnsupportedLanguageError for unsupported languages
-        pass
 
 
 def test_languages_contains_defaults():
