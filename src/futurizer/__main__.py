@@ -15,7 +15,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Futurizer.  If not, see <https://www.gnu.org/licenses/>.
 
+import sys
+
 from .cli import main
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
