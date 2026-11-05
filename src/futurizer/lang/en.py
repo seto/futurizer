@@ -31,11 +31,9 @@ TAGGER_RULES = {
         "under", "between", "against", "during", "without",
     },
     "conjunctions": {
-        "and", "but", "or", "yet", "so",
-        # NOTE: "for" is also a preposition; lookup order in _tag() checks "preps"
-        # first, so the archaic/literary conjunction use ("for he was tired")
-        # is always tagged PREP. Accepted: prepositional usage is far more common.
-        "for", "nor",
+        "and", "but", "or", "yet", "so", "nor",
+        # NOTE: the archaic conjunction "for" ("for he was tired") is
+        # deliberately absent: it is tagged PREP, whose lookup runs first.
         "because", "although", "since", "unless", "while",
         "whereas", "if", "than", "whether",
     },
