@@ -5,24 +5,25 @@ import pytest
 
 from futurizer.cli import main
 
+_SAMPLE = "Forse perché della fatal quïete\ntu sei l'immago a me sì cara vieni"
 
-def test_file_input(tmp_path):
+
+@pytest.fixture
+def sample_file(tmp_path):
     f = tmp_path / "input.txt"
-    f.write_text(
-        "Forse perché della fatal quïete\ntu sei l'immago a me sì cara vieni",
-        encoding="utf-8",
-    )
-    code, out, err = _run([str(f), "--seed", "1"])
+    f.write_text(_SAMPLE, encoding="utf-8")
+    return f
+
+
+def test_file_input(sample_file):
+    code, out, err = _run([str(sample_file), "--seed", "1"])
     assert code == 0
     assert len(out.strip()) > 0
     assert err == ""
 
 
 def test_stdin_input():
-    code, out, err = _run(
-        ["-", "--seed", "1"],
-        stdin="Forse perché della fatal quïete\ntu sei l'immago a me sì cara vieni",
-    )
+    code, out, err = _run(["-", "--seed", "1"], stdin=_SAMPLE)
     assert code == 0
     assert len(out.strip()) > 0
     assert err == ""
@@ -57,13 +58,8 @@ def test_empty_stdin():
     assert "empty" in err
 
 
-def test_lang_italian(tmp_path):
-    f = tmp_path / "input.txt"
-    f.write_text(
-        "Forse perché della fatal quïete\ntu sei l'immago a me sì cara vieni",
-        encoding="utf-8",
-    )
-    code, _, err = _run([str(f), "--lang", "it", "--seed", "1"])
+def test_lang_italian(sample_file):
+    code, _, err = _run([str(sample_file), "--lang", "it", "--seed", "1"])
     assert code == 0
     assert err == ""
 
@@ -87,48 +83,28 @@ def test_invalid_lang(tmp_path):
     assert exc.value.code != 0
 
 
-def test_seed_reproducibility(tmp_path):
-    f = tmp_path / "input.txt"
-    f.write_text(
-        "Forse perché della fatal quïete\ntu sei l'immago a me sì cara vieni",
-        encoding="utf-8",
-    )
-    _, out1, _ = _run([str(f), "--seed", "42"])
-    _, out2, _ = _run([str(f), "--seed", "42"])
+def test_seed_reproducibility(sample_file):
+    _, out1, _ = _run([str(sample_file), "--seed", "42"])
+    _, out2, _ = _run([str(sample_file), "--seed", "42"])
     # Same seed must produce identical output
     assert out1 == out2
 
 
-def test_different_seeds_differ(tmp_path):
-    f = tmp_path / "input.txt"
-    f.write_text(
-        "Forse perché della fatal quïete\ntu sei l'immago a me sì cara vieni",
-        encoding="utf-8",
-    )
-    _, out1, _ = _run([str(f), "--seed", "42"])
-    _, out2, _ = _run([str(f), "--seed", "99"])
+def test_different_seeds_differ(sample_file):
+    _, out1, _ = _run([str(sample_file), "--seed", "42"])
+    _, out2, _ = _run([str(sample_file), "--seed", "99"])
     # Different seeds should produce different output
     assert out1 != out2
 
 
-def test_noise_zero_still_produces_output(tmp_path):
-    f = tmp_path / "input.txt"
-    f.write_text(
-        "Forse perché della fatal quïete\ntu sei l'immago a me sì cara vieni",
-        encoding="utf-8",
-    )
-    code, out, _ = _run([str(f), "--noise", "0.0", "--seed", "1"])
+def test_noise_zero_still_produces_output(sample_file):
+    code, out, _ = _run([str(sample_file), "--noise", "0.0", "--seed", "1"])
     assert code == 0
     assert len(out.strip()) > 0
 
 
-def test_noise_max_still_produces_output(tmp_path):
-    f = tmp_path / "input.txt"
-    f.write_text(
-        "Forse perché della fatal quïete\ntu sei l'immago a me sì cara vieni",
-        encoding="utf-8",
-    )
-    code, out, _ = _run([str(f), "--noise", "1.0", "--seed", "1"])
+def test_noise_max_still_produces_output(sample_file):
+    code, out, _ = _run([str(sample_file), "--noise", "1.0", "--seed", "1"])
     assert code == 0
     assert len(out.strip()) > 0
 
