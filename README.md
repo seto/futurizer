@@ -110,17 +110,18 @@ heuristics, verb lemmatization patterns, and targeted industrial glossaries.
 
 ## Historical Note
 
-Futurizer draws on the typographic aesthetic of Italian Futurism — onomatopoeias,
+Futurizer plays with the typographic aesthetic of Italian Futurism — onomatopoeias,
 _parole in libertà_, fragmented syntax — as found in works like Marinetti's Zang Tumb
-Tumb (1914) and Palazzeschi's sound poetry.
+Tumb (1914) and Palazzeschi's playful nonsense verse.
 
 [Futurism](https://en.wikipedia.org/wiki/Futurism) was an avant-garde movement that
-influenced Dada, Russian Constructivism, and concrete poetry. Marinetti's later
-alignment with Italian fascism is a documented historical fact, not something this
-project celebrates.
+influenced Dada, Russian Constructivism, and concrete poetry. Its founder, Marinetti,
+was among the founders of the first Fascist movement in 1919 and later supported the
+regime, and the 1909 manifesto itself glorifies war and militarism. This is documented
+history, not something this project celebrates.
 
-The interest here is purely in the formal and parodic experiment: what happens when you
-run nineteenth-century verse, or corporate buzzword soup, through a machine that thinks
+The interest here is in the formal and parodic experiment: what happens when you run
+classic prose and verse (or a corporate buzzword soup) through a machine that thinks
 like a 1909 manifesto.
 
 ## License
