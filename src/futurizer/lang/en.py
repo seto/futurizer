@@ -134,7 +134,9 @@ NOISE_SEQUENCES: list[str] = [
     "SHHH CLATTER BANG",
 ]
 
-BURST_SEPARATORS: list[str] = ["BLAST", "THUB", "CRACK", "BOOM", "SHHH", "CHUFF", "BLIP", "ZAP"]
+BURST_SEPARATORS: list[str] = [
+    "BLAST", "THUB", "CRACK", "BOOM", "SHHH", "CHUFF", "BLIP", "ZAP"
+]
 
 TRANSFORMATION_THRESHOLDS: dict[str, float] = {
     "verb_elongate_upto": 0.35,
