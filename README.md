@@ -78,7 +78,7 @@ output = futurize(text)
 output = futurize(text, lang="en", noise=0.3)
 ```
 
-To see the list of supported lanaguages:
+To see the list of supported languages:
 
 ```python
 from futurizer import languages
