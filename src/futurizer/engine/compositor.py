@@ -55,22 +55,18 @@ def futurize(
     parsed_verses = _parse(text)
     output_verses = []
     for tokens in parsed_verses:
-        if not tokens:
-            output_verses.append("")
-            continue
-
-        words = [(tok, typ) for tok, typ in tokens if typ == "word"]
+        words = [tok for tok, typ in tokens if typ == "word"]
         if not words:
             output_verses.append("")
             continue
 
         transformed = []
-        for word, _ in words:
-            pos = _tag(word, lang_rules)
-            result = transformer.transform(word, pos)
-            transformed.append(result)
+        for word in words:
+            result = transformer.transform(word, _tag(word, lang_rules))
+            if result:
+                transformed.append(result)
 
-        verse = _compose([t for t in transformed if t], lang_data, noise=noise, rng=rng)
+        verse = _compose(transformed, lang_data, noise=noise, rng=rng)
         verse = _corrupt(verse, markov, lang_data, noise=noise, rng=rng)
         output_verses.append(verse)
 
@@ -168,16 +164,15 @@ def _compose(
     rate specified by noise.
     """
 
-    cleaned = [t for t in tokens_transformed if t]
-    if not cleaned:
+    if not tokens_transformed:
         return ""
 
     burst_seps = lang_data.get("burst_separators", [])
 
     parts = []
-    for i, tok in enumerate(cleaned):
+    for i, tok in enumerate(tokens_transformed):
         parts.append(tok)
-        if i < len(cleaned) - 1:
+        if i < len(tokens_transformed) - 1:
             sep = rng.choice(_SEPARATORS)
             parts.append(sep)
             if burst_seps and rng.random() < noise:
