@@ -1,3 +1,4 @@
+import copy
 import random
 
 from futurizer.engine.transformer import FuturistTransformer
@@ -47,13 +48,12 @@ def test_adv_returns_exclamation(it_lang_data, rng):
 
 def test_thresholds_from_lang_data(it_lang_data, rng):
     # Transformer must read thresholds from lang_data, not hardcoded constants
-    custom = dict(
-        it_lang_data,
-        thresholds={
-            **it_lang_data["thresholds"],
-            "adj_drop": 0.0,  # never drop
-        },
-    )
+    custom = copy.copy(it_lang_data)
+    custom["thresholds"] = {
+        **it_lang_data["thresholds"],
+        "adj_drop": 0.0,  # never drop
+    }
+
     transformer = FuturistTransformer(custom, rng=rng)
     for seed in range(20):
         transformer.rng = random.Random(seed)

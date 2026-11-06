@@ -28,6 +28,7 @@ import importlib
 import random
 
 from .engine.compositor import futurize as _engine_futurize
+from .langdata import LangData
 
 DEFAULT_LANG = "it"
 DEFAULT_NOISE = 0.15
@@ -82,7 +83,7 @@ def futurize(
     return _engine_futurize(text, lang_data=lang_data, noise=noise, rng=rng)
 
 
-def _load_lang_data(lang: str) -> dict:
+def _load_lang_data(lang: str) -> LangData:
     try:
         _, module_path = _LANGUAGES[lang]
     except KeyError:

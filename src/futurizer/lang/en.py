@@ -21,7 +21,9 @@ Provides POS tagger rules, verb inflection, mechanical vocabulary,
 onomatopoeia corpus, and noise sequences tailored for industrial aesthetics.
 """
 
-TAGGER_RULES = {
+from ..langdata import LangData, TaggerRules
+
+TAGGER_RULES: TaggerRules = {
     "articles": {
         "the", "a", "an",
     },
@@ -70,7 +72,7 @@ TAGGER_RULES = {
 # a suffix-rule list. Silent-e verbs come out truncated instead
 # (EXPLODE → EXPLOD), which reads as a Marinetti-style "parola troncata"
 # rather than a spelling error.
-VERB_TO_INFINITIVE = [
+VERB_TO_INFINITIVE: list[tuple[str, str]] = [
     ("ying", "ie"),
     ("ing", ""),
     ("ied", "y"),
@@ -80,7 +82,7 @@ VERB_TO_INFINITIVE = [
     ("s", ""),
 ]
 
-MECHANICAL_WORDS = [
+MECHANICAL_WORDS: list[str] = [
     "STEEL", "PISTON", "TURBINE", "CYLINDER", "CARBURETOR",
     "GASOLINE", "DIESEL", "MUSKET", "GRENADE", "BULLET",
     "MACHINEGUN", "PROPELLER", "AEROPLANE", "LOCOMOTIVE", "DYNAMO",
@@ -96,7 +98,7 @@ MECHANICAL_WORDS = [
 # Onomatopoeic sequences for training the Markov chain,
 # heavily inspired by Vorticist typography, industrial din,
 # and BLAST magazine
-ONOMATOPOEIA_CORPUS = [
+ONOMATOPOEIA_CORPUS: list[str] = [
     "BLAST HUM CLICK CLACK CHUFF",
     "CHUFF CHUFF CHUFF THUB THUB",
     "CRACK BOOM WHIZZ CLANG BANG",
@@ -120,7 +122,7 @@ ONOMATOPOEIA_CORPUS = [
     "CLICK CLACK CLATTER CHCHCH",
 ]
 
-NOISE_SEQUENCES = [
+NOISE_SEQUENCES: list[str] = [
     "BLAST HUM CLACK",
     "CHUFF CHUFF THUB",
     "CRACK BOOM WHIZZ",
@@ -132,9 +134,9 @@ NOISE_SEQUENCES = [
     "SHHH CLATTER BANG",
 ]
 
-BURST_SEPARATORS = ["BLAST", "THUB", "CRACK", "BOOM", "SHHH", "CHUFF", "BLIP", "ZAP"]
+BURST_SEPARATORS: list[str] = ["BLAST", "THUB", "CRACK", "BOOM", "SHHH", "CHUFF", "BLIP", "ZAP"]
 
-TRANSFORMATION_THRESHOLDS = {
+TRANSFORMATION_THRESHOLDS: dict[str, float] = {
     "verb_elongate": 0.35,
     "verb_repeat": 0.65,
     "noun_prefix": 0.40,
@@ -142,7 +144,7 @@ TRANSFORMATION_THRESHOLDS = {
     "adj_drop": 0.50,
 }
 
-LANG_DATA = {
+LANG_DATA: LangData = {
     "name": "English",
     "code": "en",
     "tagger_rules": TAGGER_RULES,

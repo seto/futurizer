@@ -23,6 +23,7 @@ futurist equivalent using randomized stylistic rules.
 
 import random
 
+from ..langdata import LangData, Pos
 from .markov import MarkovChain
 
 
@@ -35,7 +36,7 @@ class FuturistTransformer:
     Function words (articles, prepositions, conjunctions, pronouns) are deleted.
     """
 
-    def __init__(self, lang_data: dict, rng: random.Random | None = None):
+    def __init__(self, lang_data: LangData, rng: random.Random | None = None):
         self.rules = lang_data["rules"]
         self.mechanical_words = lang_data["mechanical_words"]
         self.thresholds = lang_data.get("thresholds", {})
@@ -97,7 +98,7 @@ class FuturistTransformer:
 
         return word.upper()
 
-    def transform(self, word: str, pos: str) -> str | None:
+    def transform(self, word: str, pos: Pos) -> str | None:
         if pos == "VERB":
             return self._futurize_verb(word)
         if pos == "NOUN":

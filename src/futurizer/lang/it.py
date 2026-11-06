@@ -21,7 +21,9 @@ Provides POS tagger rules, verb inflection, mechanical vocabulary,
 onomatopoeia corpus, and noise sequences.
 """
 
-TAGGER_RULES = {
+from ..langdata import LangData, TaggerRules
+
+TAGGER_RULES: TaggerRules = {
     "articles": {
         "il", "lo", "la", "i", "gli", "le", "l",
         "un", "uno", "una",
@@ -96,7 +98,7 @@ TAGGER_RULES = {
 
 # Each tuple is suffix_to_strip, suffix_to_append, it is applied in order
 # from most specific to least specific to avoid premature matches
-VERB_TO_INFINITIVE = [
+VERB_TO_INFINITIVE: list[tuple[str, str]] = [
     ("are", "are"), ("ere", "ere"), ("ire", "ire"),  # Pass-through: already infinitive
     ("ando", "are"), ("endo", "ere"),
     ("ato", "are"), ("uto", "ere"), ("ito", "ire"),
@@ -143,7 +145,7 @@ VERB_TO_INFINITIVE = [
     ("a", "are"), ("e", "ere"), ("o", "are"),
 ]
 
-MECHANICAL_WORDS = [
+MECHANICAL_WORDS: list[str] = [
     "ACCIAIO", "PISTONE", "TURBINA", "CILINDRO", "CARBURATORE",
     "BENZINA", "GASOLIO", "MOSCHETTO", "GRANATA", "PROIETTILE",
     "MITRAGLIATRICE", "ELICA", "AEROPLANO", "LOCOMOTIVA", "DINAMO",
@@ -158,7 +160,7 @@ MECHANICAL_WORDS = [
 
 # Onomatopoeic sequences for training the Markov chain,
 # extracted and inspired by Italian futurist poets
-ONOMATOPOEIA_CORPUS = [
+ONOMATOPOEIA_CORPUS: list[str] = [
     "ZANG TUMB TUMB TUMB TARARÀ",
     "TUMB TUUUM TUMB TUUUM TUMB",
     "ZANG ZANG ZANG TUMB TUMB",
@@ -188,7 +190,7 @@ ONOMATOPOEIA_CORPUS = [
     "CLOFF CLOP CLOCH CHCHCH"
 ]
 
-NOISE_SEQUENCES = [
+NOISE_SEQUENCES: list[str] = [
     "ZANG TUMB TUMB",
     "CRACK BOOM SSSSS",
     "TATATATA CRACK",
@@ -201,9 +203,9 @@ NOISE_SEQUENCES = [
     "FFFFF SSSSS ZANG",
 ]
 
-BURST_SEPARATORS = ["ZANG", "TUMB", "CRACK", "SSSSS", "BRRR", "CLOFF", "CLOP", "CLOCH"]
+BURST_SEPARATORS: list[str] = ["ZANG", "TUMB", "CRACK", "SSSSS", "BRRR", "CLOFF", "CLOP", "CLOCH"]
 
-TRANSFORMATION_THRESHOLDS = {
+TRANSFORMATION_THRESHOLDS: dict[str, float] = {
     "verb_elongate": 0.35,
     "verb_repeat": 0.65,
     "noun_prefix": 0.40,
@@ -211,7 +213,7 @@ TRANSFORMATION_THRESHOLDS = {
     "adj_drop": 0.50,
 }
 
-LANG_DATA = {
+LANG_DATA: LangData = {
     "name": "Italiano",
     "code": "it",
     "tagger_rules": TAGGER_RULES,

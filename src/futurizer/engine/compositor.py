@@ -24,6 +24,7 @@ plain text into futurist-style output.
 import random
 import re
 
+from ..langdata import LangData, Pos, TaggerRules
 from .markov import MarkovChain
 from .transformer import FuturistTransformer
 
@@ -33,7 +34,7 @@ _PREFIX_NOISE_RATIO = 0.3
 
 def futurize(
     text: str,
-    lang_data: dict,
+    lang_data: LangData,
     noise: float,
     rng: random.Random | None = None,
 ) -> str:
@@ -105,7 +106,7 @@ def _parse(text: str) -> list[list[tuple[str, str]]]:
     return verses
 
 
-def _tag(word: str, lang_rules: dict) -> str:
+def _tag(word: str, lang_rules: TaggerRules) -> Pos:
     """Return the POS tag for a word using suffix rules.
 
     Returns one of: 'VERB', 'NOUN', 'ADJ', 'ADV', 'PREP', 'ART', 'CONJ',
@@ -157,7 +158,7 @@ def _tag(word: str, lang_rules: dict) -> str:
 
 def _compose(
     tokens_transformed: list[str],
-    lang_data: dict,
+    lang_data: LangData,
     noise: float,
     rng: random.Random,
 ) -> str:
@@ -190,7 +191,7 @@ def _compose(
 def _corrupt(
     verse: str,
     markov: MarkovChain,
-    lang_data: dict,
+    lang_data: LangData,
     noise: float,
     rng: random.Random,
 ) -> str:
