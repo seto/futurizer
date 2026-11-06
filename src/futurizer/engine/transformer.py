@@ -66,13 +66,13 @@ class FuturistTransformer:
         inf = self._to_infinitive(word)
         roll = self.rng.random()
 
-        if roll < self._get_threshold("verb_elongate", 0.35):
+        if roll < self._get_threshold("verb_elongate_upto", 0.35):
             # Elongated echo: URLARE → URLAREEEEE
             if inf and inf[-1] in "aeiouAEIOU":
                 return inf + inf[-1] * self.rng.randint(2, 4)
             return inf + "RRRR"
 
-        if roll < self._get_threshold("verb_repeat", 0.65):
+        if roll < self._get_threshold("verb_repeat_upto", 0.65):
             # Repetition: SALIRE → SALIRE + SALIRE + SALIRE
             n = self.rng.randint(2, 3)
             return " + ".join([inf] * n)
@@ -85,9 +85,9 @@ class FuturistTransformer:
         mech = self.rng.choice(self.mechanical_words)
         roll = self.rng.random()
 
-        if roll < self._get_threshold("noun_prefix", 0.40):
+        if roll < self._get_threshold("noun_prefix_upto", 0.40):
             return f"{w}-{mech}"
-        if roll < self._get_threshold("noun_plain", 0.70):
+        if roll < self._get_threshold("noun_plain_upto", 0.70):
             # Uppercase only as the compositor will add separator
             return w
 

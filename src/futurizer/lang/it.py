@@ -206,10 +206,10 @@ NOISE_SEQUENCES: list[str] = [
 BURST_SEPARATORS: list[str] = ["ZANG", "TUMB", "CRACK", "SSSSS", "BRRR", "CLOFF", "CLOP", "CLOCH"]
 
 TRANSFORMATION_THRESHOLDS: dict[str, float] = {
-    "verb_elongate": 0.35,
-    "verb_repeat": 0.65,
-    "noun_prefix": 0.40,
-    "noun_plain": 0.70,
+    "verb_elongate_upto": 0.35,
+    "verb_repeat_upto": 0.65,
+    "noun_prefix_upto": 0.40,
+    "noun_plain_upto": 0.70,
     "adj_drop": 0.50,
 }
 
