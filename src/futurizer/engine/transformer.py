@@ -22,6 +22,7 @@ futurist equivalent using randomized stylistic rules.
 """
 
 import random
+from typing import assert_never
 
 from ..langdata import LangData, Pos
 from .markov import MarkovChain
@@ -99,16 +100,19 @@ class FuturistTransformer:
         return word.upper()
 
     def transform(self, word: str, pos: Pos) -> str | None:
-        if pos == "VERB":
-            return self._futurize_verb(word)
-        if pos == "NOUN":
-            return self._futurize_noun(word)
-        if pos == "ADJ":
-            return self._futurize_adj(word)
-        if pos in ("ART", "PREP", "CONJ", "PRON"):
-            # Function words are deleted per futurist manifesto
-            return None
-        if pos == "ADV":
-            return word.upper() + "!"
-
-        return word.upper()
+        match pos:
+            case "VERB":
+                return self._futurize_verb(word)
+            case "NOUN":
+                return self._futurize_noun(word)
+            case "ADJ":
+                return self._futurize_adj(word)
+            case "ART" | "PREP" | "CONJ" | "PRON":
+                # Function words are deleted per futurist manifesto
+                return None
+            case "ADV":
+                return word.upper() + "!"
+            case "OTHER":
+                return word.upper()
+            case _:
+                assert_never(pos)
