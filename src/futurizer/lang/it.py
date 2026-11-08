@@ -21,7 +21,7 @@ Provides POS tagger rules, verb inflection, mechanical vocabulary,
 onomatopoeia corpus, and noise sequences.
 """
 
-from ..langdata import LangData, TaggerRules
+from ..langdata import LangData, TaggerRules, Thresholds
 
 TAGGER_RULES: TaggerRules = {
     "articles": {
@@ -207,7 +207,7 @@ BURST_SEPARATORS: list[str] = [
     "ZANG", "TUMB", "CRACK", "SSSSS", "BRRR", "CLOFF", "CLOP", "CLOCH"
 ]
 
-TRANSFORMATION_THRESHOLDS: dict[str, float] = {
+TRANSFORMATION_THRESHOLDS: Thresholds = {
     "verb_elongate_upto": 0.35,
     "verb_repeat_upto": 0.65,
     "noun_prefix_upto": 0.40,

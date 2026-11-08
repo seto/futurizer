@@ -50,6 +50,20 @@ class Rules(TypedDict, total=False):
     verb_to_infinitive: list[tuple[str, str]]
 
 
+class Thresholds(TypedDict, total=False):
+    """Probability cut-offs for the stochastic transformations.
+
+    The `*_upto` values are cumulative upper bounds on a single roll in [0, 1);
+    `adj_drop` is a plain probability.
+    """
+
+    verb_elongate_upto: float
+    verb_repeat_upto: float
+    noun_prefix_upto: float
+    noun_plain_upto: float
+    adj_drop: float
+
+
 class LangData(TypedDict):
     """Complete language data bundle, exposed by each language module."""
 
@@ -61,4 +75,4 @@ class LangData(TypedDict):
     onomatopoeia_corpus: list[str]
     noise_sequences: NotRequired[list[str]]
     burst_separators: NotRequired[list[str]]
-    thresholds: NotRequired[dict[str, float]]
+    thresholds: NotRequired[Thresholds]

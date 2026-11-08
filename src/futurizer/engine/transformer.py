@@ -44,9 +44,6 @@ class FuturistTransformer:
         self.rng = rng if rng is not None else random.Random()
         self.markov = MarkovChain(lang_data["onomatopoeia_corpus"], rng=self.rng)
 
-    def _get_threshold(self, key: str, default: float) -> float:
-        return self.thresholds.get(key, default)
-
     def _to_infinitive(self, word: str) -> str:
         """Return the approximate infinitive form of a verb in uppercase.
 
@@ -66,13 +63,13 @@ class FuturistTransformer:
         inf = self._to_infinitive(word)
         roll = self.rng.random()
 
-        if roll < self._get_threshold("verb_elongate_upto", 0.35):
+        if roll < self.thresholds.get("verb_elongate_upto", 0.35):
             # Elongated echo: URLARE → URLAREEEEE
             if inf and inf[-1] in "aeiouAEIOU":
                 return inf + inf[-1] * self.rng.randint(2, 4)
             return inf + "RRRR"
 
-        if roll < self._get_threshold("verb_repeat_upto", 0.65):
+        if roll < self.thresholds.get("verb_repeat_upto", 0.65):
             # Repetition: SALIRE → SALIRE + SALIRE + SALIRE
             n = self.rng.randint(2, 3)
             return " + ".join([inf] * n)
@@ -85,16 +82,16 @@ class FuturistTransformer:
         mech = self.rng.choice(self.mechanical_words)
         roll = self.rng.random()
 
-        if roll < self._get_threshold("noun_prefix_upto", 0.40):
+        if roll < self.thresholds.get("noun_prefix_upto", 0.40):
             return f"{w}-{mech}"
-        if roll < self._get_threshold("noun_plain_upto", 0.70):
+        if roll < self.thresholds.get("noun_plain_upto", 0.70):
             # Uppercase only as the compositor will add separator
             return w
 
         return f"{mech}-{w}"
 
     def _futurize_adj(self, word: str) -> str | None:
-        if self.rng.random() < self._get_threshold("adj_drop", 0.50):
+        if self.rng.random() < self.thresholds.get("adj_drop", 0.50):
             return None
 
         return word.upper()
