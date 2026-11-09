@@ -1,7 +1,37 @@
 import random
 
-from futurizer.engine.compositor import _corrupt
+from futurizer.engine.compositor import _corrupt, _parse
 from futurizer.engine.compositor import futurize as engine_futurize
+
+
+def test_parse_token_kinds():
+    (tokens,) = _parse("Il 3, treno")
+    assert tokens == [
+        ("Il", "word"),
+        (" ", "space"),
+        ("3", "word"),
+        (",", "punct"),
+        (" ", "space"),
+        ("treno", "word"),
+    ]
+
+
+def test_parse_reconstructs_line():
+    line = "Il treno, veloce, corre: 3 volte!"
+    (tokens,) = _parse(line)
+    assert "".join(tok for tok, _ in tokens) == line
+
+
+def test_parse_preserves_blank_lines():
+    verses = _parse("Il treno corre\n\nLa macchina vola")
+    assert len(verses) == 3
+    assert verses[1] == []
+
+
+def test_parse_splits_elision_at_apostrophe():
+    # The tagger relies on this: it sees "dell" and "albero", not "dell'albero".
+    (tokens,) = _parse("dell'albero")
+    assert [tok for tok, _ in tokens] == ["dell", "'", "albero"]
 
 
 def test_engine_futurize_without_rng(it_lang_data):
