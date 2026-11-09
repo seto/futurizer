@@ -44,6 +44,21 @@ def test_engine_futurize_without_rng(it_lang_data):
     assert isinstance(out, str) and len(out) > 0
 
 
+def test_elisions_do_not_leak(it_lang_data):
+    # Elision stems ("dell'", "nell'", "c'", ...) must be deleted like any
+    # other function word, not survive as isolated tokens.
+    text = "Nell'acqua dell'albero c'era un'ombra"
+    stems = {"NELL", "DELL", "C"}
+    for seed in range(50):
+        out = engine_futurize(
+            text,
+            lang_data=it_lang_data,
+            noise=0.0,
+            rng=random.Random(seed),
+        )
+        assert not stems & set(out.upper().split()), f"Elision stem in: {out}"
+
+
 def test_function_words_deleted(it_lang_data):
     # Articles, prepositions, and conjunctions must be stripped from output.
     # noise=0.0 disables bursts and Markov corruption so the output

@@ -23,24 +23,27 @@ onomatopoeia corpus, and noise sequences.
 
 from ..langdata import LangData, TaggerRules, Thresholds
 
+# NOTE: _parse splits elisions at the apostrophe ("dell'albero" → "dell",
+# "albero"), so the function-word sets also list the elided stems.
 TAGGER_RULES: TaggerRules = {
     "articles": {
         "il", "lo", "la", "i", "gli", "le", "l",
         "un", "uno", "una",
-        "del", "dello", "della", "dei", "degli", "delle",
-        "al", "allo", "alla", "ai", "agli", "alle",
-        "dal", "dallo", "dalla", "dai", "dagli", "dalle",
-        "nel", "nello", "nella", "nei", "negli", "nelle",
-        "sul", "sullo", "sulla", "sui", "sugli", "sulle",
-        "col", "coi",
+        "del", "dello", "della", "dei", "degli", "delle", "dell",
+        "al", "allo", "alla", "ai", "agli", "alle", "all",
+        "dal", "dallo", "dalla", "dai", "dagli", "dalle", "dall",
+        "nel", "nello", "nella", "nei", "negli", "nelle", "nell",
+        "sul", "sullo", "sulla", "sui", "sugli", "sulle", "sull",
+        "col", "coi", "coll"
     },
     "preps": {
         "di", "a", "da", "in", "con", "su", "per", "tra", "fra",
-        "gl", "de", "ne",
+        "gl", "de", "ne", "d", "n",
     },
     "conjunctions": {
         "e", "ed", "o", "od", "ma", "però", "se", "che", "come",
         "quando", "mentre", "perché", "quindi", "dunque", "né",
+        "com", "quand", "ch",
     },
     "pronouns": {
         "io", "tu", "lui", "lei", "noi", "voi", "loro",
@@ -49,6 +52,7 @@ TAGGER_RULES: TaggerRules = {
         # always tagged ART, never PRON. Accepted: article usage is far more frequent.
         "mi", "ti", "si", "ci", "vi", "lo", "la", "li", "le",
         "me", "te", "sé", "mio", "tuo", "suo",
+        "c", "m", "t", "s", "v",
     },
     "verb_suffixes": [
         "isco", "isce", "iamo", "iate", "iscono",

@@ -56,3 +56,16 @@ def test_short_unknown_word_tagged_as_other(it_lang_data):
     rules = it_lang_data["tagger_rules"]
     # 3 chars or fewer, no suffix match, no vowel fallback
     assert _tag("xyz", rules) == "OTHER"
+
+
+def test_elision_stems_tagged_as_function_words(it_lang_data):
+    rules = it_lang_data["tagger_rules"]
+    expected = {
+        "dell": "ART",
+        "nell": "ART",
+        "d": "PREP",
+        "c": "PRON",
+        "quand": "CONJ",
+    }
+    for word, pos in expected.items():
+        assert _tag(word, rules) == pos, f"'{word}' should be {pos}"
