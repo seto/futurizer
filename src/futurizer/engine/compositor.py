@@ -30,6 +30,11 @@ from .transformer import FuturistTransformer
 
 _SEPARATORS = ["×", ">", "/", "+", "—", "::"]
 _PREFIX_NOISE_RATIO = 0.3
+_TOKEN_RE = re.compile(
+    r"(?P<word>[^\W\d_]+|\d+)"
+    r"|(?P<punct>[.,;:!?\"'()«»\-–—\/])"
+    r"|(?P<space>\s+)"
+)  # fmt: skip
 
 
 def futurize(
@@ -88,14 +93,13 @@ def _parse(text: str) -> list[list[tuple[str, str]]]:
             continue
 
         tokens = []
-        for m in re.finditer(r"[^\W\d_]+|\d+|[.,;:!?\"'()«»\-–—\/]|\s+", line):
-            tok = m.group()
-            if tok.strip() == "":
-                tokens.append((tok, "space"))
-            elif re.match(r"[^\W\d_]+|\d+", tok):
-                tokens.append((tok, "word"))
+        for m in re.finditer(_TOKEN_RE, line):
+            if m["word"]:
+                tokens.append((m["word"], "word"))
+            elif m["punct"]:
+                tokens.append((m["punct"], "punct"))
             else:
-                tokens.append((tok, "punct"))
+                tokens.append((m["space"], "space"))
 
         verses.append(tokens)
 
