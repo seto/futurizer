@@ -25,6 +25,8 @@ from ..langdata import LangData, TaggerRules, Thresholds
 
 # NOTE: _parse splits elisions at the apostrophe ("dell'albero" → "dell",
 # "albero"), so the function-word sets also list the elided stems.
+# NOTE: Older editions (e.g., Collodi on Gutenberg) use grave-accent variants:
+# "perchè", "nè", "sè", so both forms are included in the function-word sets.
 TAGGER_RULES: TaggerRules = {
     "articles": {
         "il", "lo", "la", "i", "gli", "le", "l",
@@ -44,6 +46,8 @@ TAGGER_RULES: TaggerRules = {
         "e", "ed", "o", "od", "ma", "però", "se", "che", "come",
         "quando", "mentre", "perché", "quindi", "dunque", "né",
         "com", "quand", "ch",
+        "perchè", "nè",
+
     },
     "pronouns": {
         "io", "tu", "lui", "lei", "noi", "voi", "loro",
@@ -53,6 +57,7 @@ TAGGER_RULES: TaggerRules = {
         "mi", "ti", "si", "ci", "vi", "lo", "la", "li", "le",
         "me", "te", "sé", "mio", "tuo", "suo",
         "c", "m", "t", "s", "v",
+        "sè",
     },
     "verb_suffixes": [
         "isco", "isce", "iamo", "iate", "iscono",

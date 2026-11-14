@@ -69,3 +69,10 @@ def test_elision_stems_tagged_as_function_words(it_lang_data):
     }
     for word, pos in expected.items():
         assert _tag(word, rules) == pos, f"'{word}' should be {pos}"
+
+
+def test_grave_accent_variants_tagged(it_lang_data):
+    rules = it_lang_data["tagger_rules"]
+    expected = {"perchè": "CONJ", "nè": "CONJ", "sè": "PRON"}
+    for word, pos in expected.items():
+        assert _tag(word, rules) == pos, f"'{word}' should be {pos}"
