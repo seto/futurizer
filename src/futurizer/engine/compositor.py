@@ -93,7 +93,7 @@ def _parse(text: str) -> list[list[tuple[str, str]]]:
             continue
 
         tokens = []
-        for m in re.finditer(_TOKEN_RE, line):
+        for m in _TOKEN_RE.finditer(line):
             if m["word"]:
                 tokens.append((m["word"], "word"))
             elif m["punct"]:
