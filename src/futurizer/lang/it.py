@@ -34,7 +34,7 @@ TAGGER_RULES: TaggerRules = {
         "dal", "dallo", "dalla", "dai", "dagli", "dalle", "dall",
         "nel", "nello", "nella", "nei", "negli", "nelle", "nell",
         "sul", "sullo", "sulla", "sui", "sugli", "sulle", "sull",
-        "col", "coi", "coll"
+        "col", "coi", "coll",
     },
     "preps": {
         "di", "a", "da", "in", "con", "su", "per", "tra", "fra",
