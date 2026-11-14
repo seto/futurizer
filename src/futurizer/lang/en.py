@@ -23,6 +23,10 @@ onomatopoeia corpus, and noise sequences tailored for industrial aesthetics.
 
 from ..langdata import LangData, TaggerRules, Thresholds
 
+# NOTE: _parse splits contractions at the apostrophe ("don't" → "don", "t"),
+# so the pronoun set also lists the clitic stems ("s", "ll", "re", ...) and the
+# stems of "n't" forms that are not words on their own ("isn", "doesn", ...).
+# "won", "don", "can" and "haven" are real words too, so they are left alone.
 TAGGER_RULES: TaggerRules = {
     "articles": {
         "the", "a", "an",
@@ -45,6 +49,11 @@ TAGGER_RULES: TaggerRules = {
         "my", "your", "his", "its", "our", "their",
         "mine", "yours", "hers", "ours", "theirs",
         "myself", "yourself", "himself", "itself",
+        # Contraction stems: it's, I'm, don't, we're, they've, you'll, I'd
+        "s", "m", "d", "t", "re", "ve", "ll",
+        # Stems of n't forms that are not words on their own: isn't, doesn't
+        "isn", "aren", "wasn", "weren", "hasn", "hadn", "doesn", "didn",
+        "wouldn", "couldn", "shouldn", "mustn", "needn",
     },
     "verb_suffixes": [
         "ing", "ed", "es", "eth",

@@ -125,3 +125,18 @@ def test_corrupt_prefix_suffix_distribution(it_markov, it_lang_data, rng):
     assert (
         abs(suffix_count / N - expected_suffix) < tolerance
     ), f"Suffix rate {suffix_count/N:.4f} deviates from expected {expected_suffix}"
+
+
+def test_english_contractions_do_not_leak(en_lang_data):
+    # Contractions are split at the apostrophe, so their stems must be deleted
+    # like any other function word instead of surviving as fragments.
+    text = "They're sure it's fine, but we couldn't say; I'll go and you've left"
+    stems = {"S", "T", "M", "D", "RE", "VE", "LL", "COULDN"}
+    for seed in range(50):
+        out = engine_futurize(
+            text,
+            lang_data=en_lang_data,
+            noise=0.0,
+            rng=random.Random(seed),
+        )
+        assert not stems & set(out.upper().split()), f"Contraction stem in: {out}"

@@ -92,3 +92,9 @@ def test_short_accented_words_not_verbs(it_lang_data):
         assert _tag(word, rules) != "VERB", f"'{word}' should not be VERB"
     for word in ("così", "perciò"):
         assert _tag(word, rules) == "CONJ", f"'{word}' should be CONJ"
+
+
+def test_english_contraction_stems_tagged(en_lang_data):
+    rules = en_lang_data["tagger_rules"]
+    for word in ("s", "t", "m", "d", "re", "ve", "ll", "isn", "doesn", "couldn"):
+        assert _tag(word, rules) == "PRON", f"'{word}' should be PRON"
