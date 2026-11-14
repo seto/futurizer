@@ -48,7 +48,9 @@ TAGGER_RULES: TaggerRules = {
         "me", "him", "her", "us", "them",
         "my", "your", "his", "its", "our", "their",
         "mine", "yours", "hers", "ours", "theirs",
-        "myself", "yourself", "himself", "itself",
+        "myself", "yourself", "himself", "herself",
+        "itself", "oneself",
+        "ourselves", "yourselves", "themselves",
         # Contraction stems: it's, I'm, don't, we're, they've, you'll, I'd
         "s", "m", "d", "t", "re", "ve", "ll",
         # Stems of n't forms that are not words on their own: isn't, doesn't
