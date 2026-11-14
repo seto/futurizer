@@ -47,7 +47,8 @@ TAGGER_RULES: TaggerRules = {
         "quando", "mentre", "perché", "quindi", "dunque", "né",
         "com", "quand", "ch",
         "perchè", "nè",
-
+        # Listed so the "ò"/"ì" verb suffixes do not catch them
+        "così", "perciò",
     },
     "pronouns": {
         "io", "tu", "lui", "lei", "noi", "voi", "loro",
@@ -73,6 +74,10 @@ TAGGER_RULES: TaggerRules = {
         "are", "ere", "ire",
         "ano", "ono", "amo",
         "asse", "esse", "isse",
+        # Passato remoto (past historic), 3rd person singular: 
+        #   "gridò" → "gridare"
+        #   "sentì" → "sentire"
+        "ò", "ì"
     ],
     "adj_suffixes": [
         "oso", "osa", "osi", "ose",
@@ -130,6 +135,10 @@ VERB_TO_INFINITIVE: list[tuple[str, str]] = [
     ("erò", "ere"), ("erai", "ere"), ("erà", "ere"),
     ("arò", "are"), ("arai", "are"), ("arà", "are"),
     ("irò", "ire"), ("irai", "ire"), ("irà", "ire"),
+    # Passato remoto (past historic), 3rd person singular:
+    #   "gridò" → "gridare"
+    #   "sentì" → "sentire"
+    ("ò", "are"), ("ì", "ire"),
     ("ano", "are"), ("amo", "are"),
     ("ono", "ere"),
     ("ar", "are"), ("er", "ere"), ("ir", "ire"),

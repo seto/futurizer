@@ -76,3 +76,19 @@ def test_grave_accent_variants_tagged(it_lang_data):
     expected = {"perchè": "CONJ", "nè": "CONJ", "sè": "PRON"}
     for word, pos in expected.items():
         assert _tag(word, rules) == pos, f"'{word}' should be {pos}"
+
+
+def test_italian_past_historic_accented_endings_tagged_as_verbs(it_lang_data):
+    rules = it_lang_data["tagger_rules"]
+    for word in ("gridò", "domandò", "andò", "sentì", "partì"):
+        assert _tag(word, rules) == "VERB", f"'{word}' should be VERB"
+
+
+def test_short_accented_words_not_verbs(it_lang_data):
+    # The length guard keeps "ciò", "lì" and "sì" out; "così" and "perciò"
+    # are listed as function words so the new suffixes do not catch them.
+    rules = it_lang_data["tagger_rules"]
+    for word in ("ciò", "lì", "sì"):
+        assert _tag(word, rules) != "VERB", f"'{word}' should not be VERB"
+    for word in ("così", "perciò"):
+        assert _tag(word, rules) == "CONJ", f"'{word}' should be CONJ"

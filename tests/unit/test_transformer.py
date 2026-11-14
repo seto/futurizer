@@ -60,3 +60,16 @@ def test_thresholds_from_lang_data(it_lang_data, rng):
         assert (
             transformer.transform("veloce", "ADJ") is not None
         ), "ADJ should never be dropped with adj_drop=0.0"
+
+
+def test_to_infinitive_italian_past_historic(it_lang_data, rng):
+    transformer = FuturistTransformer(it_lang_data, rng=rng)
+    assert transformer._to_infinitive("gridò") == "GRIDARE"
+    assert transformer._to_infinitive("sentì") == "SENTIRE"
+
+
+def test_to_infinitive_future_not_shadowed_by_past_historic(it_lang_data, rng):
+    # Rule order matters: ("irò", "ire") must come before the generic
+    # ("ò", "are"), otherwise "dormirò" becomes "DORMIRARE".
+    transformer = FuturistTransformer(it_lang_data, rng=rng)
+    assert transformer._to_infinitive("dormirò") == "DORMIRE"
