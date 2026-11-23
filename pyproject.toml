@@ -79,3 +79,11 @@ select = [
     "FURB", # refurb
 ]
 ignore = ["E501"]  # Ignore line length errors, as Black handles formatting
+
+[tool.coverage.run]
+omit = ["src/futurizer/__main__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "if __name__ == \\\"__main__\\\":",
+]
