@@ -1,7 +1,15 @@
 import random
 
-from futurizer.engine.compositor import _corrupt, _parse
+from futurizer.engine.compositor import _compose, _corrupt, _parse
 from futurizer.engine.compositor import futurize as engine_futurize
+
+
+def test_compose_empty_tokens_returns_empty(it_lang_data, rng):
+    assert _compose([], it_lang_data, noise=0.0, rng=rng) == ""
+
+
+def test_corrupt_empty_verse_returns_empty(it_markov, it_lang_data, rng):
+    assert _corrupt("", it_markov, it_lang_data, noise=1.0, rng=rng) == ""
 
 
 def test_parse_token_kinds():

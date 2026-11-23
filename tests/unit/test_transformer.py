@@ -1,7 +1,24 @@
 import copy
 import random
+from typing import cast
+
+import pytest
 
 from futurizer.engine.transformer import FuturistTransformer
+from futurizer.langdata import Pos
+
+
+class FixedRandom(random.Random):
+    def __init__(self, roll: float, randint_value: int = 2):
+        super().__init__(0)
+        self.roll = roll
+        self.randint_value = randint_value
+
+    def random(self) -> float:
+        return self.roll
+
+    def randint(self, a: int, b: int) -> int:
+        return self.randint_value
 
 
 def test_function_words_return_none(it_lang_data, rng):
@@ -73,3 +90,33 @@ def test_to_infinitive_future_not_shadowed_by_past_historic(it_lang_data, rng):
     # ("ò", "are"), otherwise "dormirò" becomes "DORMIRARE".
     transformer = FuturistTransformer(it_lang_data, rng=rng)
     assert transformer._to_infinitive("dormirò") == "DORMIRE"
+
+
+def test_to_infinitive_falls_back_to_uppercase(it_lang_data, rng):
+    transformer = FuturistTransformer(it_lang_data, rng=rng)
+    assert transformer._to_infinitive("xyz") == "XYZ"
+
+
+def test_verb_elongation_appends_vowels(it_lang_data):
+    transformer = FuturistTransformer(
+        it_lang_data, rng=FixedRandom(roll=0.0, randint_value=3)
+    )
+    assert transformer.transform("cantare", "VERB") == "CANTAREEEE"
+
+
+def test_verb_elongation_uses_r_for_non_vowel_ending(it_lang_data):
+    transformer = FuturistTransformer(it_lang_data, rng=FixedRandom(roll=0.0))
+    assert transformer.transform("xyz", "VERB") == "XYZRRRR"
+
+
+def test_verb_repeat_branch_repeats_infinitive(it_lang_data):
+    transformer = FuturistTransformer(
+        it_lang_data, rng=FixedRandom(roll=0.5, randint_value=2)
+    )
+    assert transformer.transform("cantare", "VERB") == "CANTARE + CANTARE"
+
+
+def test_unexpected_pos_fails_loudly(it_lang_data, rng):
+    transformer = FuturistTransformer(it_lang_data, rng=rng)
+    with pytest.raises(AssertionError, match="unreachable"):
+        transformer.transform("parola", cast(Pos, "INVALID"))

@@ -36,6 +36,15 @@ def test_file_not_found():
     assert out == ""
 
 
+def test_file_with_invalid_utf8(tmp_path):
+    f = tmp_path / "invalid.txt"
+    f.write_bytes(b"\xff")
+    code, out, err = _run([str(f)])
+    assert code == 1
+    assert "not readable as UTF-8" in err
+    assert out == ""
+
+
 def test_empty_file(tmp_path):
     f = tmp_path / "empty.txt"
     f.write_text("", encoding="utf-8")
@@ -81,6 +90,19 @@ def test_invalid_lang(tmp_path):
     with pytest.raises(SystemExit) as exc:
         _run([str(f), "--lang", "zz"])
     assert exc.value.code != 0
+
+
+def test_api_unsupported_language_error_is_reported(sample_file, monkeypatch):
+    def raise_unsupported_language(*args, **kwargs):
+        from futurizer.api import UnsupportedLanguageError
+
+        raise UnsupportedLanguageError("language unavailable")
+
+    monkeypatch.setattr("futurizer.cli.api.futurize", raise_unsupported_language)
+    code, out, err = _run([str(sample_file), "--lang", "it"])
+    assert code == 1
+    assert out == ""
+    assert "language unavailable" in err
 
 
 def test_seed_reproducibility(sample_file):
