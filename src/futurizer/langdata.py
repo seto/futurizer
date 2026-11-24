@@ -63,6 +63,7 @@ class Thresholds(TypedDict, total=False):
     noun_prefix_upto: float
     noun_plain_upto: float
     adj_drop: float
+    adv_drop: float
 
 
 class LangData(TypedDict):

@@ -58,9 +58,25 @@ def test_adj_drop_rate(it_lang_data):
 
 
 def test_adv_returns_exclamation(it_lang_data, rng):
-    transformer = FuturistTransformer(it_lang_data, rng=rng)
+    custom = copy.copy(it_lang_data)
+    custom["thresholds"] = {**it_lang_data["thresholds"], "adv_drop": 0.0}
+    transformer = FuturistTransformer(custom, rng=rng)
     result = transformer.transform("velocemente", "ADV")
     assert result is not None and result.endswith("!")
+
+
+def test_adv_drop_rate(it_lang_data):
+    threshold = it_lang_data["thresholds"]["adv_drop"]
+    tolerance = 0.05
+    N = 2_000
+    dropped = 0
+    for seed in range(N):
+        transformer = FuturistTransformer(it_lang_data, rng=random.Random(seed))
+        if transformer.transform("velocemente", "ADV") is None:
+            dropped += 1
+    assert (
+        abs(dropped / N - threshold) < tolerance
+    ), f"ADV drop rate {dropped/N:.3f} deviates from threshold {threshold}"
 
 
 def test_thresholds_from_lang_data(it_lang_data, rng):

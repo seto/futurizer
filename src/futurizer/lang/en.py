@@ -155,6 +155,7 @@ TRANSFORMATION_THRESHOLDS: Thresholds = {
     "noun_prefix_upto": 0.40,
     "noun_plain_upto": 0.70,
     "adj_drop": 0.50,
+    "adv_drop": 0.50,
 }
 
 LANG_DATA: LangData = {

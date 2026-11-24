@@ -34,6 +34,7 @@ class FuturistTransformer:
     Verbs are elongated, repeated, or fused with onomatopoeia.
     Nouns are uppercased and fused with mechanical vocabulary.
     Adjectives are randomly dropped or kept in uppercase.
+    Adverbs are randomly dropped or kept in uppercase with a trailing "!".
     Function words (articles, prepositions, conjunctions, pronouns) are deleted.
     """
 
@@ -96,6 +97,12 @@ class FuturistTransformer:
 
         return word.upper()
 
+    def _futurize_adv(self, word: str) -> str | None:
+        if self.rng.random() < self.thresholds.get("adv_drop", 0.50):
+            return None
+
+        return word.upper() + "!"
+
     def transform(self, word: str, pos: Pos) -> str | None:
         match pos:
             case "VERB":
@@ -108,7 +115,7 @@ class FuturistTransformer:
                 # Function words are deleted per futurist manifesto
                 return None
             case "ADV":
-                return word.upper() + "!"
+                return self._futurize_adv(word)
             case "OTHER":
                 return word.upper()
             case _:

@@ -40,7 +40,8 @@ Futurizer operates on two conceptually distinct layers:
 
 1. **Syntactic Demolition (Always Active):** Following the radical manifestos, the
    destruction of syntax (removal of function words, infinitivization of verbs, and the
-   50% adjective drop rate) is an absolute stylistic baseline. It cannot be turned off.
+   50% adjective and adverb drop rate) is an absolute stylistic baseline. It cannot be
+   turned off.
 2. **Acoustic Noise (Parameter Driven):** Base typographic separators connect every
    token regardless of setting. The `--noise` parameter controls only the additional
    interference layered on top: the chance of onomatopoeic bursts inserted between
