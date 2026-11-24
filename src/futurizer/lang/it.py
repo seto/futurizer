@@ -23,13 +23,18 @@ onomatopoeia corpus, and noise sequences.
 
 from ..langdata import LangData, TaggerRules, Thresholds
 
-# NOTE: _parse splits elisions at the apostrophe ("dell'albero" → "dell",
-# "albero"), so the function-word sets also list the elided stems.
-# NOTE: Older editions (e.g., Collodi on Gutenberg) use grave-accent variants:
-# "perchè", "nè", "sè", so both forms are included in the function-word sets.
-# NOTE: "adverbs" holds only invariable words that are never nouns, adjectives,
-# prepositions or conjunctions in ordinary use. Ambiguous ones ("più", "tanto",
-# "bene", "ora") are deliberately left out.
+# NOTE(s):
+# - Elisions: _parse splits at the apostrophe ("dell'albero" → "dell", "albero"),
+#   so the function-word sets also list the elided stems.
+# - Grave accents: older editions (e.g., Collodi on Gutenberg) write "perchè",
+#   "nè" and "sè", so both spellings are listed.
+# - Adverbs: only invariable words that are never nouns, adjectives, prepositions
+#   or conjunctions in ordinary use. Ambiguous ones ("più", "tanto", "bene",
+#   "ora") are deliberately left out.
+# - Irregular verbs: only the most frequent forms of the texts the engine was
+#   tuned on (Collodi's Pinocchio) are listed, and forms that double as another
+#   part of speech are avoided. Other irregular forms fall back to the suffix
+#   rules.
 TAGGER_RULES: TaggerRules = {
     "articles": {
         "il", "lo", "la", "i", "gli", "le", "l",
@@ -101,10 +106,10 @@ TAGGER_RULES: TaggerRules = {
         "are", "ere", "ire",
         "ano", "ono", "amo",
         "asse", "esse", "isse",
-        # Passato remoto (past historic), 3rd person singular: 
+        # Passato remoto (past historic), 3rd person singular:
         #   "gridò" → "gridare"
         #   "sentì" → "sentire"
-        "ò", "ì"
+        "ò", "ì",
     ],
     "adj_suffixes": [
         "oso", "osa", "osi", "ose",
@@ -137,8 +142,8 @@ TAGGER_RULES: TaggerRules = {
     ],
 }
 
-# Each tuple is suffix_to_strip, suffix_to_append, it is applied in order
-# from most specific to least specific to avoid premature matches
+# Each tuple is (suffix_to_strip, suffix_to_append). Rules are applied in order,
+# from most specific to least specific, to avoid premature matches
 VERB_TO_INFINITIVE: list[tuple[str, str]] = [
     ("are", "are"), ("ere", "ere"), ("ire", "ire"),  # Pass-through: already infinitive
     ("ando", "are"), ("endo", "ere"),
@@ -181,10 +186,10 @@ VERB_TO_INFINITIVE: list[tuple[str, str]] = [
     # (← amare, stem "am-") needs len > 7 for ("avamo", "are") and has
     # exactly 7, so it's rejected and matched instead by the shorter
     # ("amo", "are"), yielding "AMAVARE" instead of "AMARE". Same
-    # mechanism hits "stava"/"dava" (stems "st-"/"d-"). Not confined to
-    # rare irregulars or to long words, it's a property of stem length,
-    # and it can misfire on common regular forms too. It still earns its
-    # place for genuinely unmatched longer forms, e.g. "cresce" (3rd
+    # mechanism hits "stava"/"dava" (stems "st-"/"d-"), is listed in
+    # "irregular_verbs". Not confined to rare irregulars or to long words,
+    # it's a property of stem length, and it can misfire on common regular forms too.
+    # It still earns its place for genuinely unmatched longer forms, e.g. "cresce" (3rd
     # singular of "crescere", not covered by "-isce") correctly becomes
     # "CRESCERE" via the bare "e" rule.
     ("a", "are"), ("e", "ere"), ("o", "are"),
