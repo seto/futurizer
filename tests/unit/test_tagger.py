@@ -26,6 +26,13 @@ def test_verb_suffixes_tagged(it_lang_data):
         assert _tag(word, rules) == "VERB", f"'{word}' should be VERB"
 
 
+def test_irregular_verb_forms_tagged(it_lang_data):
+    rules = it_lang_data["tagger_rules"]
+    for forms in rules["irregular_verbs"].values():
+        for word in forms:
+            assert _tag(word, rules) == "VERB", f"'{word}' should be VERB"
+
+
 def test_noun_suffixes_tagged(it_lang_data):
     rules = it_lang_data["tagger_rules"]
     for word in ("nazione", "velocità", "movimento", "potenza"):

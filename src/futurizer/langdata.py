@@ -39,6 +39,7 @@ class TaggerRules(TypedDict, total=False):
     conjunctions: set[str]
     pronouns: set[str]
     adverbs: set[str]
+    irregular_verbs: dict[str, list[str]]
     verb_suffixes: list[str]
     adj_suffixes: list[str]
     adv_suffixes: list[str]

@@ -101,6 +101,13 @@ def test_to_infinitive_italian_past_historic(it_lang_data, rng):
     assert transformer._to_infinitive("sentì") == "SENTIRE"
 
 
+def test_to_infinitive_italian_irregular_verbs(it_lang_data, rng):
+    transformer = FuturistTransformer(it_lang_data, rng=rng)
+    for infinitive, forms in it_lang_data["tagger_rules"]["irregular_verbs"].items():
+        for form in forms:
+            assert transformer._to_infinitive(form) == infinitive.upper()
+
+
 def test_to_infinitive_future_not_shadowed_by_past_historic(it_lang_data, rng):
     # Rule order matters: ("irò", "ire") must come before the generic
     # ("ò", "are"), otherwise "dormirò" becomes "DORMIRARE".

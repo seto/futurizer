@@ -40,6 +40,7 @@ class FuturistTransformer:
 
     def __init__(self, lang_data: LangData, rng: random.Random | None = None):
         self.rules = lang_data["rules"]
+        self.irregular_verbs = lang_data["tagger_rules"].get("irregular_verbs", {})
         self.mechanical_words = lang_data["mechanical_words"]
         self.thresholds = lang_data.get("thresholds", {})
         self.rng = rng if rng is not None else random.Random()
@@ -53,6 +54,10 @@ class FuturistTransformer:
         """
 
         w = word.lower()
+        for infinitive, forms in self.irregular_verbs.items():
+            if w in forms:
+                return infinitive.upper()
+
         for pattern, replacement in self.rules.get("verb_to_infinitive", []):
             if w.endswith(pattern) and len(w) > len(pattern) + 2:
                 stem = w[: -len(pattern)]

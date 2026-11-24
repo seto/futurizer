@@ -111,8 +111,8 @@ def _tag(word: str, lang_rules: TaggerRules) -> Pos:
 
     Returns one of: 'VERB', 'NOUN', 'ADJ', 'ADV', 'PREP', 'ART', 'CONJ',
     'PRON', 'OTHER'.
-    Lookup order: function-word lists, the adverb list, then suffix rules,
-    then heuristic vowel-ending fallbacks.
+    Lookup order: function-word lists, the adverb and irregular verb lists,
+    then suffix rules, then heuristic vowel-ending fallbacks.
     """
 
     w = word.lower()
@@ -127,6 +127,8 @@ def _tag(word: str, lang_rules: TaggerRules) -> Pos:
         return "PRON"
     if w in lang_rules.get("adverbs", set()):
         return "ADV"
+    if any(w in forms for forms in lang_rules.get("irregular_verbs", {}).values()):
+        return "VERB"
 
     verb_suffixes = lang_rules.get("verb_suffixes", [])
     adj_suffixes = lang_rules.get("adj_suffixes", [])
