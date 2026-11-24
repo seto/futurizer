@@ -110,7 +110,8 @@ def _tag(word: str, lang_rules: TaggerRules) -> Pos:
     """Return the POS tag for a word using suffix rules.
 
     Returns one of: 'VERB', 'NOUN', 'ADJ', 'ADV', 'PREP', 'ART', 'CONJ',
-    'PRON', 'OTHER'. Lookup order: function-word lists, then suffix rules,
+    'PRON', 'OTHER'.
+    Lookup order: function-word lists, the adverb list, then suffix rules,
     then heuristic vowel-ending fallbacks.
     """
 
@@ -124,6 +125,8 @@ def _tag(word: str, lang_rules: TaggerRules) -> Pos:
         return "CONJ"
     if w in lang_rules.get("pronouns", set()):
         return "PRON"
+    if w in lang_rules.get("adverbs", set()):
+        return "ADV"
 
     verb_suffixes = lang_rules.get("verb_suffixes", [])
     adj_suffixes = lang_rules.get("adj_suffixes", [])

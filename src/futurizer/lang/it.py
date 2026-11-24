@@ -27,6 +27,9 @@ from ..langdata import LangData, TaggerRules, Thresholds
 # "albero"), so the function-word sets also list the elided stems.
 # NOTE: Older editions (e.g., Collodi on Gutenberg) use grave-accent variants:
 # "perchè", "nè", "sè", so both forms are included in the function-word sets.
+# NOTE: "adverbs" holds only invariable words that are never nouns, adjectives,
+# prepositions or conjunctions in ordinary use. Ambiguous ones ("più", "tanto",
+# "bene", "ora") are deliberately left out.
 TAGGER_RULES: TaggerRules = {
     "articles": {
         "il", "lo", "la", "i", "gli", "le", "l",
@@ -59,6 +62,10 @@ TAGGER_RULES: TaggerRules = {
         "me", "te", "sé", "mio", "tuo", "suo",
         "c", "m", "t", "s", "v",
         "sè",
+    },
+    "adverbs": {
+        "non", "già", "mai", "qui", "lì", "là", "giù",
+        "sempre", "davvero", "poi", "invece", "anche",
     },
     "verb_suffixes": [
         "isco", "isce", "iamo", "iate", "iscono",

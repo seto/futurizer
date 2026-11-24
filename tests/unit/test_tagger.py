@@ -71,6 +71,16 @@ def test_elision_stems_tagged_as_function_words(it_lang_data):
         assert _tag(word, rules) == pos, f"'{word}' should be {pos}"
 
 
+def test_listed_adverbs_tagged(it_lang_data):
+    rules = it_lang_data["tagger_rules"]
+    adverbs = (
+        "non", "già", "mai", "qui", "lì", "là", "giù",
+        "sempre", "davvero", "poi", "invece", "anche",
+    )
+    for word in adverbs:
+        assert _tag(word, rules) == "ADV", f"'{word}' should be ADV"
+
+
 def test_grave_accent_variants_tagged(it_lang_data):
     rules = it_lang_data["tagger_rules"]
     expected = {"perchè": "CONJ", "nè": "CONJ", "sè": "PRON"}

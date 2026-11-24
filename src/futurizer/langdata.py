@@ -38,6 +38,7 @@ class TaggerRules(TypedDict, total=False):
     preps: set[str]
     conjunctions: set[str]
     pronouns: set[str]
+    adverbs: set[str]
     verb_suffixes: list[str]
     adj_suffixes: list[str]
     adv_suffixes: list[str]
