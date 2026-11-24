@@ -44,11 +44,13 @@ TAGGER_RULES: TaggerRules = {
     "preps": {
         "di", "a", "da", "in", "con", "su", "per", "tra", "fra",
         "gl", "de", "ne", "d", "n",
+        "ad", "senza", "dentro", "fuori", "dopo",
     },
     "conjunctions": {
         "e", "ed", "o", "od", "ma", "però", "se", "che", "come",
         "quando", "mentre", "perché", "quindi", "dunque", "né",
         "com", "quand", "ch",
+        "allora", "appena", "cioè", "dove", "dov", "anch",
         "perchè", "nè",
         # Listed so the "ò"/"ì" verb suffixes do not catch them
         "così", "perciò",
@@ -62,6 +64,10 @@ TAGGER_RULES: TaggerRules = {
         "me", "te", "sé", "mio", "tuo", "suo",
         "c", "m", "t", "s", "v",
         "sè",
+        "mia", "mie", "miei", "tua", "tue", "tuoi", "sua", "sue", "suoi",
+        "quel", "quello", "quella", "quelli", "quelle", "quell",
+        "questo", "questa", "questi", "queste", "quest",
+        "chi", "cui", "tutt", "po",
     },
     "adverbs": {
         "non", "già", "mai", "qui", "lì", "là", "giù",

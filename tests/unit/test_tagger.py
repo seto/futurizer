@@ -108,3 +108,14 @@ def test_english_contraction_stems_tagged(en_lang_data):
     rules = en_lang_data["tagger_rules"]
     for word in ("s", "t", "m", "d", "re", "ve", "ll", "isn", "doesn", "couldn"):
         assert _tag(word, rules) == "PRON", f"'{word}' should be PRON"
+
+
+def test_frequent_function_words_are_deleted(it_lang_data):
+    # High-frequency words that used to survive as nouns or unknown words.
+    rules = it_lang_data["tagger_rules"]
+    deleted = {"ART", "PREP", "CONJ", "PRON"}
+    for word in (
+        "quel", "questo", "quella", "sua", "mia", "chi", "cui",
+        "allora", "appena", "senza", "dopo", "dentro", "fuori",
+    ):
+        assert _tag(word, rules) in deleted, f"'{word}' should be deleted"
