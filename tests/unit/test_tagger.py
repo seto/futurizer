@@ -73,11 +73,10 @@ def test_elision_stems_tagged_as_function_words(it_lang_data):
 
 def test_listed_adverbs_tagged(it_lang_data):
     rules = it_lang_data["tagger_rules"]
-    adverbs = (
+    for word in (
         "non", "già", "mai", "qui", "lì", "là", "giù",
         "sempre", "davvero", "poi", "invece", "anche",
-    )
-    for word in adverbs:
+    ):  # fmt: skip
         assert _tag(word, rules) == "ADV", f"'{word}' should be ADV"
 
 
@@ -117,5 +116,5 @@ def test_frequent_function_words_are_deleted(it_lang_data):
     for word in (
         "quel", "questo", "quella", "sua", "mia", "chi", "cui",
         "allora", "appena", "senza", "dopo", "dentro", "fuori",
-    ):
+    ):  # fmt: skip
         assert _tag(word, rules) in deleted, f"'{word}' should be deleted"
