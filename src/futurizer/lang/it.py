@@ -68,7 +68,7 @@ TAGGER_RULES: TaggerRules = {
         # NOTE: "lo", "la", "le", "li" are also articles; the lookup order in
         # _tag() checks "articles" first, so clitic usage ("lo vedo") is
         # always tagged ART, never PRON. Accepted: article usage is far more frequent.
-        "mi", "ti", "si", "ci", "vi", "lo", "la", "li", "le",
+        "mi", "ti", "si", "ci", "vi", "ce", "ve", "lo", "la", "li", "le",
         "me", "te", "sé", "mio", "tuo", "suo",
         "c", "m", "t", "s", "v",
         "sè",
