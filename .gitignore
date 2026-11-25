@@ -19,3 +19,4 @@ dist/
 .coverage
 data/
 scratch/
+/nanogenmo/corpus/processed/wood.txt
