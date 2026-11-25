@@ -27,7 +27,7 @@ from ..langdata import LangData, TaggerRules, Thresholds
 # - Elisions: _parse splits at the apostrophe ("dell'albero" → "dell", "albero"),
 #   so the function-word sets also list the elided stems.
 # - Grave accents: older editions (e.g., Collodi on Gutenberg) write "perchè",
-#   "nè" and "sè", so both spellings are listed.
+#   "nè", "sè", "potè" and "ripetè", so both spellings are listed.
 # - Adverbs: only invariable words that are never nouns, adjectives, prepositions
 #   or conjunctions in ordinary use. Ambiguous ones ("più", "tanto", "bene",
 #   "ora") are deliberately left out.
@@ -35,6 +35,9 @@ from ..langdata import LangData, TaggerRules, Thresholds
 #   tuned on (Collodi's Pinocchio) are listed, and forms that double as another
 #   part of speech are avoided. Other irregular forms fall back to the suffix
 #   rules.
+# - Known glitches: suffix rules cannot tell verbs from look-alike words, so
+#   "subito" (→ SUBIRE), "lontano" (→ LONTARE) or "pover'uomo" (→ POVERE) are
+#   accepted as aesthetic glitches rather than patched with one-off exceptions.
 TAGGER_RULES: TaggerRules = {
     "articles": {
         "il", "lo", "la", "i", "gli", "le", "l",
@@ -79,18 +82,19 @@ TAGGER_RULES: TaggerRules = {
         "sempre", "davvero", "poi", "invece", "anche",
     },
     "irregular_verbs": {
-        "essere": ["è", "era", "erano", "ero", "sono", "son", "fu", "sarà"],
-        "avere": ["ho", "hai", "ha", "aveva", "ebbe"],
-        "dire": ["disse", "dire", "dir"],
-        "fare": ["fece", "fare", "far", "fa", "fai"],
+        "essere": ["è", "era", "erano", "ero", "sono", "son", "fu", "sarò", "sarà"],
+        "avere": ["ho", "hai", "ha", "aver", "aveva", "ebbe", "avevano", "avrò"],
+        "dire": ["disse", "dire", "dir", "diceva", "dirò"],
+        "fare": ["fece", "fare", "far", "fa", "fai", "faceva", "facendo", "farò"],
         "dare": ["dar", "dava"],
         "volere": ["voglio", "vuoi", "vuol"],
-        "potere": ["può", "potè"],
+        "potere": ["può", "potè", "poté"],
         "sapere": ["sa", "sai", "so"],
         "vedere": ["vide"],
         "andare": ["va"],
         "stare": ["sta", "stava"],
-        "ripetere": ["ripetè"],
+        "ripetere": ["ripetè", "ripeté"],
+        "venire": ["venne"]
     },
     "verb_suffixes": [
         "isco", "isce", "iamo", "iate", "iscono",
