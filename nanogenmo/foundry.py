@@ -134,7 +134,7 @@ def forge(text: str, seed: int = 2026) -> str:
     return f"{top}\n{cover}\n{top}\n\n" + "\n".join(out) + f"\n{ending}\n"
 
 
-if __name__ == "__main__":
+def main():
     corpus = Path(__file__).parent / "corpus"
     processed = corpus / "processed"
     processed.mkdir(parents=True, exist_ok=True)
@@ -150,3 +150,7 @@ if __name__ == "__main__":
 
     print("wc -w:", len(chrome.split()))
     print("alphanumeric sequences:", len(re.findall(r"\w+", chrome)))
+
+
+if __name__ == "__main__":
+    main()
