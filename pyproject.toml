@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "futurizer"
-version = "0.0.6"
+version = "0.1.0"
 description = "Kinetic syntax shredder with Markovian noise injection and infinitive-driven deconstruction."
 readme = "README.md"
 authors = [{ name="seto" }]
@@ -12,19 +12,25 @@ license = "AGPL-3.0-or-later"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
 classifiers = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
     "Programming Language :: Python :: 3.15",
+    "Environment :: Console",
+    "Natural Language :: English",
+    "Natural Language :: Italian",
     "Operating System :: OS Independent",
+    "Topic :: Artistic Software",
+    "Topic :: Text Processing :: Linguistic",
 ]
 dependencies = []
 
 [project.urls]
 Source = "https://github.com/seto/futurizer"
+Changelog = "https://github.com/seto/futurizer/blob/master/CHANGES.md"
 
 [project.scripts]
 futurize = "futurizer.cli:main"
