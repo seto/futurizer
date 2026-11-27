@@ -12,7 +12,7 @@
 
 **Futurizer** is a rule-based linguistic transformation engine that deconstructs plain
 text, crushes its syntax, and rebuilds it as a high-velocity, industrialized stream of
-consciousness inspired by the 1909 early avant-garde manifestos.
+consciousness inspired by the Futurist manifestos of 1909 and 1912.
 
 By passing standard prose or classic poetry through its pipelines, Futurizer strips away
 grammatical bureaucracy, injects mechanical jargon, and introduces stochastic
@@ -21,16 +21,18 @@ onomatopoeic noise driven by internal Markov chains.
 ## Features
 
 - **Syntax Demolition:** Automated removal of function words (articles, prepositions,
-  conjunctions, pronouns) to let nouns stand naked and raw.
+  conjunctions, pronouns) to let nouns stand naked and raw; adjectives and adverbs are
+  dropped half of the time.
 - **Verbal Infinitivization & Echoes:** Verbs are forcibly mutated into their infinitive
   forms, dynamically elongated (`URLAREEEEE`), repeated as mechanical loops
   (`SALIRE + SALIRE`), or fused with raw sound.
-- **Noun Industrialization:** Nouns are automatically fused with heavy industry and
-  military jargon using randomized prefix and suffix patterns.
-- **Stochastic Typographic Noise:** Base typographic separators (`×`, `>`, `/`, `::`)
-  connect every token regardless of setting. A fine-tunable noise factor additionally
-  controls the chance of extra onomatopoeic bursts (`ZANG`, `TUMB`, `CRACK`,
-  language-specific) and Markov-generated line corruption.
+- **Noun Industrialization:** Most nouns are fused with heavy industry and military
+  jargon, as a prefix or a suffix chosen at random.
+- **Stochastic Typographic Noise:** Base typographic separators (`×`, `>`, `/`, `+`,
+  `—`, `::`) connect every token regardless of setting. A fine-tunable noise factor
+  additionally controls the chance of extra onomatopoeic bursts (`ZANG`, `TUMB`,
+  `CRACK`, language-specific) and of noise at the edges of each line: a fixed sequence
+  at the start, a Markov-generated one at the end.
 - **Reproducible Chaos:** Full support for pseudorandom seeding to recreate the exact
   same destruction across different runs.
 
@@ -45,7 +47,8 @@ Futurizer operates on two conceptually distinct layers:
 2. **Acoustic Noise (Parameter Driven):** Base typographic separators connect every
    token regardless of setting. The `--noise` parameter controls only the additional
    interference layered on top: the chance of onomatopoeic bursts inserted between
-   tokens, plus Markov-generated noise prefixed or appended to each line.
+   tokens, plus a fixed noise sequence at the start of a line and a Markov-generated one
+   at the end.
 
 ## Installation
 
@@ -75,8 +78,8 @@ from futurizer import futurize
 # Basic usage
 output = futurize(text)
 
-# With explicit language and noise level
-output = futurize(text, lang="en", noise=0.3)
+# With explicit language, noise level and seed
+output = futurize(text, lang="en", noise=0.3, seed=77)
 ```
 
 To see the list of supported languages:
@@ -101,7 +104,8 @@ Unsupported language codes raise `futurizer.UnsupportedLanguageError`.
 ## Language Support
 
 The engine utilizes language-specific collections containing part-of-speech suffix
-heuristics, verb lemmatization patterns, and targeted industrial glossaries.
+heuristics, short word lists, verb lemmatization patterns, and targeted industrial
+glossaries.
 
 - Italian (it): Built around classic Italian literary texts, loaded with mechanical
   terms from early 20th-century aviation, automotive, and heavy metallurgy industries.
@@ -123,7 +127,14 @@ history, not something this project celebrates.
 
 The interest here is in the formal and parodic experiment: what happens when you run
 classic prose and verse (or a corporate buzzword soup) through a machine that thinks
-like a 1909 manifesto.
+like a Futurist manifesto.
+
+## NaNoGenMo 2026
+
+[`nanogenmo/`](https://github.com/seto/futurizer/tree/master/nanogenmo) runs Futurizer
+on Collodi's _Le avventure di Pinocchio_ for
+[NaNoGenMo](https://github.com/NaNoGenMo/2026) 2026: the novel, its PDF edition and the
+script that makes them. It is not part of the installed package.
 
 ## License
 
